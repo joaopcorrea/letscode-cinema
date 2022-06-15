@@ -1,4 +1,8 @@
-﻿using Letscode_Cinema.Views;
+﻿using Letscode_Cinema.Services;
+using Letscode_Cinema.Views;
 
-LoginView login = new LoginView();
+Database db = new Database();
+db.CreateFiles();
+
+Login login = new Login();
 login.Show();

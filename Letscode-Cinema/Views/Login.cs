@@ -1,4 +1,5 @@
 ﻿using Letscode_Cinema.Models;
+using Letscode_Cinema.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Letscode_Cinema.Views
 {
-    internal class LoginView : MenuView
+    internal class Login : Menu
     {
         public void Show()
         {
@@ -29,11 +30,11 @@ namespace Letscode_Cinema.Views
                 switch (opcao)
                 {
                     case "1":
-                        Login();
+                        SignIn();
                         break;
 
                     case "2":
-                        Signup();
+                        SignUp();
                         break;
 
                     case "3":
@@ -46,10 +47,9 @@ namespace Letscode_Cinema.Views
                 }
             }
             while (opcao != "3");
-            
         }
 
-        private void Login()
+        private void SignIn()
         {
             try
             {
@@ -59,19 +59,7 @@ namespace Letscode_Cinema.Views
                 Console.WriteLine("Digite a senha: ");
                 senha = Console.ReadLine();
 
-                if (!Directory.Exists("database"))
-                    Directory.CreateDirectory("database");
-                if (!File.Exists("database/user.db"))
-                {
-                    File.Create("database/user.db");
-                    File.WriteAllText("database/user.db", "[]");
-                }
-
-                string json = File.ReadAllText("database/user.db");
-
-                List<User> users = JsonConvert.DeserializeObject<List<User>>(json);
-
-                User user = users.Where(u => u.Email == email && u.Password == senha).FirstOrDefault();
+                User user = Database.GetUsers().FirstOrDefault(u => u.Email == email && u.Password == senha);
                 if (user == null)
                 {
                     throw new Exception("Credenciais inválidas!");
@@ -88,7 +76,7 @@ namespace Letscode_Cinema.Views
             }
         }
 
-        private void Signup()
+        private void SignUp()
         {
             try
             {
@@ -112,20 +100,8 @@ namespace Letscode_Cinema.Views
                 Console.WriteLine("O usuário é administrador? (S / N): ");
                 isAdmin = Console.ReadLine() == "S";
 
-                if (!Directory.Exists("database"))
-                    Directory.CreateDirectory("database");
-                if (!File.Exists("database/user.db"))
+                User user = new User
                 {
-                    File.Create("database/user.db");
-                    File.WriteAllText("database/user.db", "[]");
-                }
-
-                string json = File.ReadAllText("database/user.db");
-
-                List<User> users = JsonConvert.DeserializeObject<List<User>>(json);
-                users.Add(new User
-                {
-                    Id = users.Count == 0 ? 1 : users.Max(u => u.Id) + 1,
                     Email = email,
                     Password = password,
                     Name = username,
@@ -133,10 +109,9 @@ namespace Letscode_Cinema.Views
                     BirthDate = birthDate,
                     IsStudent = isStudent,
                     IsAdmin = isAdmin
-                });
+                };
 
-                json = JsonConvert.SerializeObject(users);
-                File.WriteAllText("database/user.db", json);
+                Database.AddUser(user);
             }
             catch (Exception ex)
             {

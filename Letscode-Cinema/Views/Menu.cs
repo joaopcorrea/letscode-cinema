@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Letscode_Cinema.Views
 {
-    public class MenuView
+    public class Menu
     {
         public void DrawMenu(string title)
         {
