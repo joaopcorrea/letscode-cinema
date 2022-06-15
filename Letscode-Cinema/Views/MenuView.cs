@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Letscode_Cinema.Models
+namespace Letscode_Cinema.Views
 {
-    internal class Login
+    public class MenuView
     {
+        public void DrawMenu(string title)
+        {
+
+        }
     }
 }
