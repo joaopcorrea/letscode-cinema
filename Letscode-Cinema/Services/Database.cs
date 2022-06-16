@@ -157,68 +157,72 @@ namespace Letscode_Cinema.Services
         {
             try
             {
+                Cinema cinema = new Cinema()
+                {
+                    CinemaName = "Cinemark",
+                    City = "São Paulo"
+                };
+
+                Room sala1 = new Room()
+                {
+                    Cinema = cinema,
+                    RoomName = "Sala 1",
+                    Columns = 10,
+                    Rows = 20,
+                    Is3d = false,
+                };
+
+                Room sala2 = new Room()
+                {
+                    Cinema = cinema,
+                    RoomName = "Sala 2",
+                    Columns = 20,
+                    Rows = 20,
+                    Is3d = true,
+                };
+
                 List<Session> sessions = new List<Session>()
-            {
-                new Session()
                 {
-                    Id = 1,
-                    CinemaName = "Cinemark",
-                    City = "São Paulo",
-                    RoomName = "Sala 1",
-                    Columns = 10,
-                    Rows = 20,
-                    Date = DateTime.Now.AddDays(5),
-                    Is3d = false,
-                    MovieId = 1,
-                    Price = 15,
-                    SeatsUserId = new int[10,20]
-                },
+                    new Session()
+                    {
+                        Id = 1,
+                        Room = sala1,
+                        Date = DateTime.Now.AddDays(5),
+                        MovieId = 1,
+                        Price = 15,
+                        SeatsUserId = new int[10,20]
+                    },
 
-                new Session()
-                {
-                    Id = 2,
-                    CinemaName = "Cinemark",
-                    City = "São Paulo",
-                    RoomName = "Sala 2",
-                    Columns = 20,
-                    Rows = 20,
-                    Date = DateTime.Now.AddDays(5),
-                    Is3d = true,
-                    MovieId = 2,
-                    Price = 30,
-                    SeatsUserId = new int[20,20]
-                },
+                    new Session()
+                    {
+                        Id = 2,
+                        Room = sala2,
+                        Date = DateTime.Now.AddDays(5),
+                        MovieId = 2,
+                        Price = 30,
+                        SeatsUserId = new int[20,20]
+                    },
 
-                new Session()
-                {
-                    Id = 3,
-                    CinemaName = "Cinemark",
-                    City = "São Paulo",
-                    RoomName = "Sala 1",
-                    Columns = 10,
-                    Rows = 20,
-                    Date = DateTime.Now.AddDays(6),
-                    Is3d = false,
-                    MovieId = 3,
-                    Price = 15,
-                    SeatsUserId = new int[10,20]
-                },
+                    new Session()
+                    {
+                        Id = 3,
+                        Room = sala1,
+                        Date = DateTime.Now.AddDays(6),
+                        MovieId = 3,
+                        Price = 15,
+                        SeatsUserId = new int[10,20]
+                    },
 
-                new Session()
-                {
-                    Id = 4,
-                    CinemaName = "Cinemark",
-                    City = "São Paulo",
-                    RoomName = "Sala 2",
-                    Columns = 20,
-                    Rows = 20,
-                    Date = DateTime.Now.AddDays(6),
-                    Is3d = true,
-                    MovieId = 1,
-                    Price = 30,
-                    SeatsUserId = new int[10,20]
-                },
-            };
+                    new Session()
+                    {
+                        Id = 4,
+                        Room = sala2,
+                        Date = DateTime.Now.AddDays(6),
+                        MovieId = 1,
+                        Price = 30,
+                        SeatsUserId = new int[10,20]
+                    },
+                };
 
                 string json = JsonConvert.SerializeObject(sessions);
                 File.WriteAllText(fileName, json);
@@ -233,10 +237,19 @@ namespace Letscode_Cinema.Services
             }
         }
 
-        public static List<Session> GetSessions()
+        public static List<Session> GetSession()
         {
-            List<Session> sessions = new List<Session>();
+            string file = "database/session";
+            string json = File.ReadAllText(file);
+
+            List<Session> sessions = JsonConvert.DeserializeObject<List<Session>>(json);
             return sessions;
+        }
+
+        public static Session GetSession(int id)
+        {
+            Session session = GetSession().FirstOrDefault(s => s.Id == id);
+            return session;
         }
 
         public static List<User> GetUsers()
@@ -260,13 +273,19 @@ namespace Letscode_Cinema.Services
             return true;
         }
 
-        public static List<Movie> GetMovies()
+        public static List<Movie> GetMovie()
         {
             string file = "database/movie";
             string json = File.ReadAllText(file);
 
             List<Movie> movies = JsonConvert.DeserializeObject<List<Movie>>(json);
             return movies;
+        }
+
+        public static Movie GetMovie(int id)
+        {
+            Movie movie = GetMovie().FirstOrDefault(m => m.Id == id);
+            return movie;
         }
 
         public static List<Food> GetFoods()

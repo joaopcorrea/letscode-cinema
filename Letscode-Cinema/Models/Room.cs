@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Letscode_Cinema.Models
 {
-    public class Room : Cinema
+    public class Room
     {
+        public Cinema Cinema { get; set; }
         public string RoomName { get; set; }
         public bool Is3d { get; set; }
         public int Rows { get; set; }
