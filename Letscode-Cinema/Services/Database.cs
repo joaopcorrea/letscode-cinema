@@ -125,18 +125,34 @@ namespace Letscode_Cinema.Services
             {
                 List<Food> foods = new List<Food>()
             {
-                new Food()
+                new PopCorn()
                 {
                     Id = 1,
-                    Description = "Pipoca",
-                    Price = 12
+                    Description = "Pipoca Salgada",
+                    Price = 12,
+                    PopCornIsSalty = true,
                 },
 
-                new Food()
+                new PopCorn()
                 {
                     Id = 2,
+                    Description = "Pipoca Doce",
+                    Price = 14,
+                    PopCornIsSalty = false,
+                },
+                new Soda()
+                {
+                    Id = 3,
                     Description = "Coca-Cola",
-                    Price = 5
+                    Price = 5,
+                    IsDiet = false,
+                },
+                new Soda()
+                {
+                    Id = 4,
+                    Description = "Coca-Cola Diet",
+                    Price = 4.5,
+                    IsDiet = true,
                 }
             };
 
@@ -295,6 +311,12 @@ namespace Letscode_Cinema.Services
 
             List<Food> foods = JsonConvert.DeserializeObject<List<Food>>(json);
             return foods;
+        }
+
+        public static Food GetFoods(int id)
+        {
+            Food food = GetFoods().FirstOrDefault(m => m.Id == id);
+            return food;
         }
 
         public static List<Ticket> GetTickets()
