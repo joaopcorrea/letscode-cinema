@@ -190,7 +190,7 @@ namespace Letscode_Cinema.Services
                         Date = DateTime.Now.AddDays(5),
                         MovieId = 1,
                         Price = 15,
-                        SeatsUserId = new int[10,20]
+                        SeatsUserId = new int[sala1.Rows,sala1.Columns]
                     },
 
                     new Session()
@@ -200,7 +200,7 @@ namespace Letscode_Cinema.Services
                         Date = DateTime.Now.AddDays(5),
                         MovieId = 2,
                         Price = 30,
-                        SeatsUserId = new int[20,20]
+                        SeatsUserId = new int[sala2.Rows,sala2.Columns]
                     },
 
                     new Session()
@@ -210,7 +210,7 @@ namespace Letscode_Cinema.Services
                         Date = DateTime.Now.AddDays(6),
                         MovieId = 3,
                         Price = 15,
-                        SeatsUserId = new int[10,20]
+                        SeatsUserId = new int[sala1.Rows,sala1.Columns]
                     },
 
                     new Session()
@@ -220,7 +220,7 @@ namespace Letscode_Cinema.Services
                         Date = DateTime.Now.AddDays(6),
                         MovieId = 1,
                         Price = 30,
-                        SeatsUserId = new int[10,20]
+                        SeatsUserId = new int[sala2.Rows,sala2.Columns]
                     },
                 };
 
