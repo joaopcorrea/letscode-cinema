@@ -169,7 +169,6 @@ namespace Letscode_Cinema.Services
                     RoomName = "Sala 1",
                     Columns = 10,
                     Rows = 20,
-                    Is3d = false,
                 };
 
                 Room sala2 = new Room()
@@ -178,7 +177,6 @@ namespace Letscode_Cinema.Services
                     RoomName = "Sala 2",
                     Columns = 20,
                     Rows = 20,
-                    Is3d = true,
                 };
 
                 List<Session> sessions = new List<Session>()
@@ -190,7 +188,8 @@ namespace Letscode_Cinema.Services
                         Date = DateTime.Now.AddDays(5),
                         MovieId = 1,
                         Price = 15,
-                        SeatsUserId = new int[10,20]
+                        SeatsUserId = new int[10,20],
+                        Is3d = true
                     },
 
                     new Session()
@@ -200,7 +199,8 @@ namespace Letscode_Cinema.Services
                         Date = DateTime.Now.AddDays(5),
                         MovieId = 2,
                         Price = 30,
-                        SeatsUserId = new int[20,20]
+                        SeatsUserId = new int[20,20],
+                        Is3d = false
                     },
 
                     new Session()
@@ -210,7 +210,8 @@ namespace Letscode_Cinema.Services
                         Date = DateTime.Now.AddDays(6),
                         MovieId = 3,
                         Price = 15,
-                        SeatsUserId = new int[10,20]
+                        SeatsUserId = new int[10,20],
+                        Is3d = false
                     },
 
                     new Session()
@@ -220,7 +221,8 @@ namespace Letscode_Cinema.Services
                         Date = DateTime.Now.AddDays(6),
                         MovieId = 1,
                         Price = 30,
-                        SeatsUserId = new int[10,20]
+                        SeatsUserId = new int[10,20],
+                        Is3d = true
                     },
                 };
 

@@ -10,7 +10,6 @@ namespace Letscode_Cinema.Models
     {
         public Cinema Cinema { get; set; }
         public string RoomName { get; set; }
-        public bool Is3d { get; set; }
         public int Rows { get; set; }
         public int Columns { get; set; }
     }
