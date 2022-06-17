@@ -23,6 +23,7 @@ namespace Letscode_Cinema.Views
             int quantityDietCoke = 0;
             double priceDietCoke = 0;
             string[] validateFood = new string[4];
+            string answer = "sim";
 
             do
             {
@@ -70,15 +71,14 @@ namespace Letscode_Cinema.Views
                             priceCoke = quantityCoke * price;
                             validateFood[2] = "Coca-Cola ---------- " + quantityCoke + " ------------- " + priceCoke.ToString("C");
                             break;
-                        case 4:
+                        default:
                             quantityDietCoke = quantityDietCoke + quantity;
                             priceDietCoke = quantityDietCoke * price;
                             validateFood[3] = "Coca-Cola Diet ----- " + quantityDietCoke + " ------------- " + priceDietCoke.ToString("C");
                             break;
-                        default:
-                            break;
                     }
                 }
+                Console.Clear();
                 Console.WriteLine("================== PEDIDO ===================");
                 Console.WriteLine("Produto -------- Quantidade -------- Valor ");
                 foreach (string item in validateFood)
@@ -89,8 +89,10 @@ namespace Letscode_Cinema.Views
                     }
                 }
                 Console.WriteLine();
+                Console.WriteLine("Deseja continuar comprando? Sim/não");
+                answer = Console.ReadLine().ToLower();
             }
-            while (chooseFood != 1 || chooseFood != 2 || chooseFood != 3 || chooseFood != 4);
+            while (answer == "sim");
         }
     }
 }
