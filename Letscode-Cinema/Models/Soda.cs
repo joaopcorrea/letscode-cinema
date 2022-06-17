@@ -8,35 +8,15 @@ namespace Letscode_Cinema.Models
 {
     public class Soda : Food
     {
-        public Soda(int id, string description, double price, int quantity, string sodaFlavor)
-        {
-            Id = id;
-            Description = description;
-            Price = 3.50;
-            Quantity = quantity;
-            SodaFlavor = sodaFlavor;
-        }
-
         public string SodaFlavor { get; set; }
+        public bool IsDiet { get; set; }
 
-        public bool IsDiet()
+
+        public bool IsItDiet(bool isdiet)
         {
-            if (SodaFlavor.ToLower().Contains("diet"))
+            IsDiet = isdiet;
+            if (isdiet)
             {
-                Id = 33;
-                return true;
-            }
-            else
-            {
-                Id = 34;
-                return false;
-            }
-        }
-        public override bool IsVegan()
-        {
-            if (SodaFlavor.ToLower().Contains("juice"))
-            {
-                Id = 32;
                 return true;
             }
             else

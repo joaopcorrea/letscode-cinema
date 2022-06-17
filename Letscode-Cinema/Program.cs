@@ -9,3 +9,6 @@ seatList.ShowSeats(1);
 
 Login login = new Login();
 login.Show();
+
+FoodList foodList = new FoodList();
+foodList.ShowFoods();

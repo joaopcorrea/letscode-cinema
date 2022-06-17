@@ -13,9 +13,9 @@ namespace Letscode_Cinema.Models
         public double Price { get; set; }
         public int Quantity { get; set; }
 
-        public virtual bool IsVegan()
+        public bool IsVegan()
         {
-            if (Id == 55)
+            if (Id == 1)
             {
                 return true;
             }
