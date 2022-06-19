@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Letscode_Cinema.Views
 {
-    internal class MovieList : Menu
+    public class MovieList : Menu
     {
         List<Movie> movies = Database.GetMovie();
 
