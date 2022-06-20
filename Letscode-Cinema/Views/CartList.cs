@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Letscode_Cinema.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +9,7 @@ namespace Letscode_Cinema.Views
 {
     internal class CartList
     {
-        public void Carrinho()
+        public void Carrinho(int userId, Session session, List<int[]> seats)
         {
             //if (chooseFood == "1" || chooseFood == "2")
             //{
