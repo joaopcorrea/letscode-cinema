@@ -185,7 +185,6 @@ namespace Letscode_Cinema.Services
                     RoomName = "Sala 1",
                     Columns = 10,
                     Rows = 20,
-                    Is3d = false,
                 };
 
                 Room sala2 = new Room()
@@ -194,7 +193,6 @@ namespace Letscode_Cinema.Services
                     RoomName = "Sala 2",
                     Columns = 20,
                     Rows = 20,
-                    Is3d = true,
                 };
 
                 List<Session> sessions = new List<Session>()

@@ -10,8 +10,9 @@ namespace Letscode_Cinema.Views
 {
     public class FoodList : Menu
     {
-        public void ShowFoods()
+        public Dictionary <int, int> ShowFoods()
         {
+            Dictionary<int, int> chosenFood = new Dictionary<int, int>();
             int chooseFood = 0;
             double price = 0;
             int quantitySaltyPopCorn = 0;
@@ -23,6 +24,7 @@ namespace Letscode_Cinema.Views
             int quantityDietCoke = 0;
             double priceDietCoke = 0;
             string[] validateFood = new string[4];
+            string answer = "sim";
 
             do
             {
@@ -34,6 +36,7 @@ namespace Letscode_Cinema.Views
                 dictChooseFood.Add(3, 5);
                 dictChooseFood.Add(4, 4.5);
 
+                Console.WriteLine("-------- C O M I D A ------------------");
                 List<Food> foodList = Database.GetFoods();
                 foreach (var food in foodList)
                 {
@@ -59,27 +62,42 @@ namespace Letscode_Cinema.Views
                             quantitySaltyPopCorn = quantitySaltyPopCorn + quantity;
                             priceSaltyPopCorn = quantitySaltyPopCorn * price;
                             validateFood[0] = "Pipoca ------------- " + quantitySaltyPopCorn + " ------------- " + priceSaltyPopCorn.ToString("C");
+                            if (chosenFood.ContainsKey(chooseFood))
+                                chosenFood[chooseFood] += quantity; 
+                            else
+                                chosenFood.Add(chooseFood, quantity);
                             break;
                         case 2:
                             quantitySweetPopCorn = quantitySweetPopCorn + quantity;
                             priceSweetPopCorn = quantitySweetPopCorn * price;
                             validateFood[1] = "Pipoca Doce -------- " + quantitySweetPopCorn + " ------------- " + priceSweetPopCorn.ToString("C");
+                            if (chosenFood.ContainsKey(chooseFood))
+                                chosenFood[chooseFood] += quantity;
+                            else
+                                chosenFood.Add(chooseFood, quantity);
                             break;
                         case 3:
                             quantityCoke = quantityCoke + quantity;
                             priceCoke = quantityCoke * price;
                             validateFood[2] = "Coca-Cola ---------- " + quantityCoke + " ------------- " + priceCoke.ToString("C");
+                            if (chosenFood.ContainsKey(chooseFood))
+                                chosenFood[chooseFood] += quantity;
+                            else
+                                chosenFood.Add(chooseFood, quantity);
                             break;
-                        case 4:
+                        default:
                             quantityDietCoke = quantityDietCoke + quantity;
                             priceDietCoke = quantityDietCoke * price;
                             validateFood[3] = "Coca-Cola Diet ----- " + quantityDietCoke + " ------------- " + priceDietCoke.ToString("C");
-                            break;
-                        default:
+                            if (chosenFood.ContainsKey(chooseFood))
+                                chosenFood[chooseFood] += quantity;
+                            else
+                                chosenFood.Add(chooseFood, quantity);
                             break;
                     }
                 }
-                Console.WriteLine("================== PEDIDO ===================");
+                Console.Clear();
+                Console.WriteLine("--------------- P E D I D O -----------------");
                 Console.WriteLine("Produto -------- Quantidade -------- Valor ");
                 foreach (string item in validateFood)
                 {
@@ -89,8 +107,12 @@ namespace Letscode_Cinema.Views
                     }
                 }
                 Console.WriteLine();
+                Console.WriteLine("Deseja continuar comprando? Sim/não");
+                answer = Console.ReadLine().ToLower();
             }
-            while (chooseFood != 1 || chooseFood != 2 || chooseFood != 3 || chooseFood != 4);
+            while (answer == "sim");
+            Console.Clear();
+            return chosenFood;
         }
     }
 }

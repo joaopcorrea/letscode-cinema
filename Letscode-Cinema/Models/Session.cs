@@ -14,5 +14,6 @@ namespace Letscode_Cinema.Models
         public DateTime Date { get; set; }
         public int[,] SeatsUserId { get; set; }
         public double Price { get; set; }
+        public bool Is3d { get; set; }
     }
 }
