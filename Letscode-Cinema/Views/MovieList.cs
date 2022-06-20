@@ -51,13 +51,10 @@ namespace Letscode_Cinema.Views
 
             return movie;
         }
-<<<<<<< HEAD
-
-        //internal Movie ChooseMovie()
-        //{
-        //    throw new NotImplementedException();
-        //}
-=======
->>>>>>> ec27daa248bfd020d0d97ddd61b674dc19998ac3
+    
+    //internal Movie ChooseMovie()
+    //{
+    //    throw new NotImplementedException();
+    //}
     }
 }
