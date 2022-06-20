@@ -1,6 +1,7 @@
 ﻿using Letscode_Cinema.Models;
 using Letscode_Cinema.Services;
 using Letscode_Cinema.Views;
+using Letscode_Cinema.Models;
 
 namespace Letscode_Cinema
 {
@@ -12,10 +13,13 @@ namespace Letscode_Cinema
             db.CreateFiles();
 
             Login login = new Login();
-            login.Show();
-
             User user = new User();
-            user.BirthDate = DateTime.Now.AddYears(-15);
+            do
+            {
+                user = login.Show();
+            } while (user == null);
+            Console.Clear();
+            //user.BirthDate = DateTime.Now.AddYears(-15);
 
             bool chosen = false;
             while (!chosen)
@@ -29,9 +33,12 @@ namespace Letscode_Cinema
                     Session session = sessionList.ChooseSession(movie, user);
                     if (session != null)
                     {
-                        Console.WriteLine("Sessao " + session.Id);
+                        //Console.WriteLine("Sessao " + session.Id);
+                        SeatList seatList = new SeatList();
+                        seatList.ChooseSeats(session);
                         chosen = true;
                     }
+<<<<<<< HEAD
 
                     SeatList seatList = new SeatList();
                     List<int[]> chosenSeats = seatList.ChooseSeats(session);
@@ -43,12 +50,21 @@ namespace Letscode_Cinema
 
                     TicketList ticketList = new TicketList(userLogin, session, chosenSeats, chosenFoods);
                     ticketList.ShowTicket();
+=======
+>>>>>>> ec27daa248bfd020d0d97ddd61b674dc19998ac3
                 }
                 catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
                 }
             }
+
+            //FoodList foodList = new FoodList();
+            //Dictionary<int, int> chosenFoods = foodList.ShowFoods();
+
+            //TicketList ticketList = new TicketList(chosenFoods);
+            //ticketList.ShowTicket();
+
         }
     }
 }
