@@ -10,13 +10,11 @@ namespace Letscode_Cinema.Views
 {
     public class SeatList : Menu
     {
-        public List<int[]> ChooseSeats(int sessionId)
+        public List<int[]> ChooseSeats(Session session)
         {
             DrawMenu("Escolher assentos");
 
             List<int[]> seatsChosen = new List<int[]>();
-
-            Session session = Database.GetSession(sessionId);
             Movie movie = Database.GetMovie(session.MovieId);
 
             bool exit = false;
@@ -45,11 +43,11 @@ namespace Letscode_Cinema.Views
                     DrawSeats(session);
 
                     Console.WriteLine();
-                    Console.WriteLine("Digite 'voltar' para retornar ao menu anterior");
+                    Console.WriteLine("Digite '0' para retornar ao menu anterior");
                     Console.WriteLine("Escolha um assento: ");
 
                     string seat = Console.ReadLine();
-                    if (seat == "voltar")
+                    if (seat == "0")
                     {
                         exit = true;
                         continue;

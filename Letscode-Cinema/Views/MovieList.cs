@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Letscode_Cinema.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,11 @@ namespace Letscode_Cinema.Views
 
             }
             while (true);
+        }
+
+        internal Movie ChooseMovie()
+        {
+            throw new NotImplementedException();
         }
     }
 }
