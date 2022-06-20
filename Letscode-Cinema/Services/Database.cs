@@ -251,7 +251,7 @@ namespace Letscode_Cinema.Services
             }
         }
 
-        public static List<Session> GetSession()
+        public static List<Session> GetSessions()
         {
             string file = "database/session";
             string json = File.ReadAllText(file);
@@ -262,7 +262,7 @@ namespace Letscode_Cinema.Services
 
         public static Session GetSession(int id)
         {
-            Session session = GetSession().FirstOrDefault(s => s.Id == id);
+            Session session = GetSessions().FirstOrDefault(s => s.Id == id);
             return session;
         }
 
@@ -287,7 +287,7 @@ namespace Letscode_Cinema.Services
             return true;
         }
 
-        public static List<Movie> GetMovie()
+        public static List<Movie> GetMovies()
         {
             string file = "database/movie";
             string json = File.ReadAllText(file);
@@ -298,7 +298,7 @@ namespace Letscode_Cinema.Services
 
         public static Movie GetMovie(int id)
         {
-            Movie movie = GetMovie().FirstOrDefault(m => m.Id == id);
+            Movie movie = GetMovies().FirstOrDefault(m => m.Id == id);
             return movie;
         }
 
@@ -311,13 +311,29 @@ namespace Letscode_Cinema.Services
             return foods;
         }
 
-        public static Food GetFoods(int id)
+        public static Food GetFood(int id)
         {
-            Food food = GetFoods().FirstOrDefault(m => m.Id == id);
+            Food food = GetFoods().FirstOrDefault(f => f.Id == id);
             return food;
         }
 
-        public static List<Ticket> GetTickets()
+        public static List<Cart> GetCarts()
+        {
+            string file = "database/cart";
+            string json = File.ReadAllText(file);
+
+            List<Cart> carts = JsonConvert.DeserializeObject<List<Cart>>(json);
+            return carts;
+        }
+
+        public static Cart GetCart(int userId)
+        {
+            Cart cart = GetCarts().FirstOrDefault(c => c.UserId == userId);
+
+            return cart;
+        }
+
+        public static List<Ticket> GetTicket()
         {
             string file = "database/ticket";
             string json = File.ReadAllText(file);
