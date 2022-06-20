@@ -34,12 +34,14 @@ namespace Letscode_Cinema
                     }
 
                     SeatList seatList = new SeatList();
-                    seatList.ChooseSeats(1);
+                    List<int[]> chosenSeats = seatList.ChooseSeats(session);
 
                     FoodList foodList = new FoodList();
                     Dictionary<int, int> chosenFoods = foodList.ShowFoods();
 
-                    TicketList ticketList = new TicketList(chosenFoods);
+                    User userLogin = Database.GetUser(1);
+
+                    TicketList ticketList = new TicketList(userLogin, session, chosenSeats, chosenFoods);
                     ticketList.ShowTicket();
                 }
                 catch (Exception ex)
