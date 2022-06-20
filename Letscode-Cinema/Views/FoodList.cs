@@ -28,6 +28,7 @@ namespace Letscode_Cinema.Views
 
             do
             {
+                Console.Clear();
                 DrawMenu("Escolher comida");
 
                 Dictionary<int, double> dictChooseFood = new Dictionary<int, double>(4);
