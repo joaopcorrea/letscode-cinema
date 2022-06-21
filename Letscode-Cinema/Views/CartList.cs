@@ -111,8 +111,12 @@ namespace Letscode_Cinema.Views
 
             try
             {
-                //TicketList ticketList = new TicketList();
-                //ticketList.ShowTicket();
+                Console.WriteLine("Criando ticket!");
+                Console.ReadLine();
+
+                Cart cart = Database.GetCart(userId);
+                TicketList ticketList = new TicketList(cart);
+                ticketList.CreateTicket();
             }
             catch (Exception ex)
             {
