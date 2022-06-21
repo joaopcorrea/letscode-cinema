@@ -37,13 +37,13 @@ namespace Letscode_Cinema.Views
         public void DrawMainMenu()
         {
             Console.Clear();
-            Console.WriteLine("Digite uma opção: \n");
             Console.WriteLine("1. Escolher Filme");
             Console.WriteLine("2. Escolher Comida");
             Console.WriteLine("3. Visualizar Carrinho");
             Console.WriteLine("4. Consultar Tickets");
             Console.WriteLine("5. Sair");
             Console.WriteLine();
+            Console.Write("Digite uma opção: ");
         }
     }
 }
