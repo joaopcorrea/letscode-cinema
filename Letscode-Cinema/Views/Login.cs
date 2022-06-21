@@ -31,10 +31,10 @@ namespace Letscode_Cinema.Views
                 switch (opcao)
                 {
                     case "1":
-                        user = SignIn();
+                        return SignIn();
                         break;
                     case "2":
-                        user = SignUp();
+                        return SignUp();
                         break;
                     case "3":
                         Environment.Exit(0);
@@ -44,8 +44,10 @@ namespace Letscode_Cinema.Views
                         Console.ReadLine();
                         break;
                 }
-            } while (opcao != "1" && opcao != "2" && opcao != "3");
-            return user;
+            }
+            while (opcao != "3");
+
+            return null;
         }
 
         private User SignIn()
@@ -129,6 +131,8 @@ namespace Letscode_Cinema.Views
                 user.IsAdmin = isAdmin;
 
                 Database.AddUser(user);
+
+                return user;
             }
             catch (Exception ex)
             {

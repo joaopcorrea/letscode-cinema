@@ -11,9 +11,6 @@ namespace Letscode_Cinema.Models
         public int Id { get; set; }
         public double Price { get; set; }
         public DateTime Date { get; set; }
-
-
-        //listar tickets
-        //criar ticket
+        public Dictionary<int,int> FoodIds { get; set; }
     }
 }

@@ -42,18 +42,25 @@ namespace Letscode_Cinema.Services
                     FillFoods(file);
                 }
 
-                file = $"{dir}/ticket";
+                file = $"{dir}/session";
+                if (!File.Exists(file))
+                {
+                    File.Create(file).Close();
+                    FillSessions(file);
+                }
+
+                file = $"{dir}/cart";
                 if (!File.Exists(file))
                 {
                     File.Create(file).Close();
                     File.WriteAllText(file, "[]");
                 }
 
-                file = $"{dir}/session";
+                file = $"{dir}/ticket";
                 if (!File.Exists(file))
                 {
                     File.Create(file).Close();
-                    FillSessions(file);
+                    File.WriteAllText(file, "[]");
                 }
 
                 return true;
@@ -331,6 +338,70 @@ namespace Letscode_Cinema.Services
             Cart cart = GetCarts().FirstOrDefault(c => c.UserId == userId);
 
             return cart;
+        }
+
+        public static Cart AddCart(int userId)
+        {
+            List<Cart> carts = GetCarts();
+
+            Cart cart = new Cart()
+            {
+                UserId = userId,
+                Items = new List<Cart.CartItem>()
+            };
+
+            carts.Add(cart);
+
+            string json = JsonConvert.SerializeObject(carts);
+            File.WriteAllText("database/cart", json);
+
+            return cart;
+        }
+
+        public static bool RemoveCartItem(int userId, Cart.CartItem item)
+        {
+            List<Cart> carts = GetCarts();
+            Cart cart = carts.FirstOrDefault(c => c.UserId == userId);
+
+            cart.Items.RemoveAt(cart.Items.IndexOf(item));
+
+            UpdateCarts(carts);
+
+            return true;
+        }
+
+        public static bool AddCartItem(int userId, Cart.CartItem item)
+        {
+            List<Cart> carts = GetCarts();
+
+            var cart = carts.FirstOrDefault(c => c.UserId == userId);
+
+            cart.Items.Add(item);
+
+            UpdateCarts(carts);
+
+            return true;
+        }
+
+        public static bool ChangeCartSession(int userId, int sessionId)
+        {
+            List<Cart> carts = GetCarts();
+
+            var cart = carts.FirstOrDefault(c => c.UserId == userId);
+
+            cart.SessionId = sessionId;
+
+            UpdateCarts(carts);
+
+            return true;
+        }
+
+        private static bool UpdateCarts(List<Cart> carts)
+        {
+            string json = JsonConvert.SerializeObject(carts);
+            File.WriteAllText("database/cart", json);
+
+            return true;
         }
 
         public static List<Ticket> GetTicket()
