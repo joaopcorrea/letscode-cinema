@@ -33,14 +33,12 @@ namespace Letscode_Cinema.Views
                     case "1":
                         return SignIn();
                         break;
-
                     case "2":
                         return SignUp();
                         break;
-
                     case "3":
+                        Environment.Exit(0);
                         break;
-
                     default:
                         Console.WriteLine("Opção inválida! Tente novamente...");
                         Console.ReadLine();
@@ -54,37 +52,54 @@ namespace Letscode_Cinema.Views
 
         private User SignIn()
         {
-            try
+            bool userExists = false;
+            bool correctPassword = false;
+            string email = "@";
+            string senha;
+            User user = new User();
+            int tries = 1;
+            do
             {
-                string email, senha;
-                Console.WriteLine("Digite o email: ");
-                email = Console.ReadLine();
-                Console.WriteLine("Digite a senha: ");
+                if (!userExists)
+                {
+                    Console.Write("Digite o email: ");
+                    email = Console.ReadLine();
+                }
+                Console.Write("Digite a senha: ");
                 senha = Console.ReadLine();
-
-                User user = Database.GetUsers().FirstOrDefault(u => u.Email == email && u.Password == senha);
+                user = Database.GetUsers().FirstOrDefault(u => u.Email == email);
                 if (user == null)
                 {
-                    throw new Exception("Credenciais inválidas!");
+                    Console.Clear();
+                    Console.WriteLine("Usuario nao encontrado.");
                 }
-
-                Console.WriteLine("Usuário encontrado!");
-                Console.WriteLine($"Id:{user.Id}\nNome:{user.Name}");
-                Console.ReadLine();
-
-                return user;
-            }
-            catch (Exception ex)
+                else
+                {
+                    userExists = true;
+                    user = Database.GetUsers().FirstOrDefault(u => u.Email == email && u.Password == senha);
+                    if (user == null)
+                    {
+                        tries++;
+                        Console.Clear();
+                        Console.WriteLine("Senha incorreta.");
+                        Console.WriteLine("Digite o email: " + email);
+                    }
+                    else
+                        correctPassword = true;
+                }
+            } while (!correctPassword && tries <= 3);
+            if (tries >= 3)
             {
-                Console.WriteLine("Erro: " + ex.Message);
-                Console.ReadLine();
+                Console.Clear();
+                return null;
             }
-
-            return null;
+            else
+                return user;
         }
 
         private User SignUp()
         {
+            User user = new User();
             try
             {
                 string email, password, username;
@@ -107,16 +122,13 @@ namespace Letscode_Cinema.Views
                 Console.WriteLine("O usuário é administrador? (S / N): ");
                 isAdmin = Console.ReadLine() == "S";
 
-                User user = new User
-                {
-                    Email = email,
-                    Password = password,
-                    Name = username,
-                    CPF = cpf,
-                    BirthDate = birthDate,
-                    IsStudent = isStudent,
-                    IsAdmin = isAdmin
-                };
+                user.Email = email;
+                user.Password = password;
+                user.Name = username;
+                user.CPF = cpf;
+                user.BirthDate = birthDate;
+                user.IsStudent = isStudent;
+                user.IsAdmin = isAdmin;
 
                 Database.AddUser(user);
 
@@ -127,8 +139,7 @@ namespace Letscode_Cinema.Views
                 Console.WriteLine("Erro: " + ex.ToString());
                 Console.ReadLine();
             }
-
-            return null;
+            return user;
         }
     }
 }

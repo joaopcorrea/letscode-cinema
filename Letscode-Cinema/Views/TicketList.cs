@@ -11,21 +11,33 @@ namespace Letscode_Cinema.Views
     public class TicketList : Menu
     {
         Ticket ticket = new Ticket();
-        public TicketList(Dictionary<int, int> pChosenFoods)
+        public TicketList(User pUserLogin, Session pSession, List<int[]> pChosenSeats, Dictionary<int, int> pChosenFoods)
         {
-            //ticket.SessionId = pSession;
+            ticket.UserId = pUserLogin;
+            ticket.SessionId = pSession;
+            ticket.Seats = pChosenSeats;
             ticket.FoodIds = pChosenFoods;
         }
 
         public void ShowTicket()
         {
-            //objeto do carrinho, tudo que ele gastou, um por compra,
-            //poltronas, valor total, comida
             Console.WriteLine("-------------------------------------------------------");
             Console.WriteLine("|------------------- T I C K E T ---------------------|");
+            Console.WriteLine("| Usuário: " + ticket.UserId);
             Console.WriteLine("| Data: " + ticket.Date);
             Console.WriteLine("| Sessão: " + ticket.SessionId);
-            //Console.WriteLine("| Assento: " + session.MovieId);
+            Console.Write("| Assento: " );
+            //foreach (var seat in ticket.Seats)
+            //{
+            //    const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            //    Console.WriteLine(string.Join("", seat));
+            //}
+            foreach (int[] seat in ticket.Seats)
+            {
+                Console.Write($"{seat[0]}{seat[1]}, ");
+            }
+            Console.WriteLine();
+            if 
             Console.WriteLine("| Comida: ");
             double totalFoodValue = 0;
             foreach (var food in ticket.FoodIds)
@@ -55,8 +67,8 @@ namespace Letscode_Cinema.Views
                     totalFoodValue += food.Value * 4.5;
                 }
             }
-            Console.WriteLine("| Valor total da compra: " 
-                + (totalFoodValue + ticket.Price).ToString("C"));
+            Console.WriteLine("|\n| Valor total da compra: " 
+                + (totalFoodValue + ticket.Price).ToString("C") + "\n");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Letscode_Cinema.Models;
 using Letscode_Cinema.Services;
 using Letscode_Cinema.Views;
+using Letscode_Cinema.Models;
 
 namespace Letscode_Cinema
 {
