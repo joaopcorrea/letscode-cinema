@@ -11,9 +11,14 @@ namespace Letscode_Cinema.Views
     public class TicketList : Menu
     {
         Ticket ticket = new Ticket();
-        public TicketList(User pUserLogin, Session pSession, List<int[]> pChosenSeats, Dictionary<int, int> pChosenFoods)
+        //parametro como carrinho, somente colocar um for de quantidade, descrição
+        //lista antes com os tickets que possuem, imprimir o ticket
+        //Chamar método da database de criação de ticket, vincular com a classe ticket
+        //Receber ojeto da classe carrinho, pegar infos, novo objeto de ticket mandar pra database
+        //Carrinho.items.Quantidade = gerar ticket que via para o database
+        public TicketList(Session pSession, List<int[]> pChosenSeats, Dictionary<int, int> pChosenFoods)
         {
-            ticket.UserId = pUserLogin;
+            //ticket.UserId = pUser;
             ticket.SessionId = pSession;
             ticket.Seats = pChosenSeats;
             ticket.FoodIds = pChosenFoods;
@@ -24,20 +29,15 @@ namespace Letscode_Cinema.Views
             Console.WriteLine("-------------------------------------------------------");
             Console.WriteLine("|------------------- T I C K E T ---------------------|");
             Console.WriteLine("| Usuário: " + ticket.UserId);
-            Console.WriteLine("| Data: " + ticket.Date);
-            Console.WriteLine("| Sessão: " + ticket.SessionId);
+            Console.WriteLine("| Cinema: " + ticket.SessionId.Room.Cinema);
+            Console.WriteLine("| Data: " + ticket.SessionId.Date);
             Console.Write("| Assento: " );
-            //foreach (var seat in ticket.Seats)
-            //{
-            //    const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            //    Console.WriteLine(string.Join("", seat));
-            //}
             foreach (int[] seat in ticket.Seats)
             {
-                Console.Write($"{seat[0]}{seat[1]}, ");
+                const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                Console.Write($"{letters[seat[0]]}{seat[1]}, ");
             }
             Console.WriteLine();
-            if 
             Console.WriteLine("| Comida: ");
             double totalFoodValue = 0;
             foreach (var food in ticket.FoodIds)

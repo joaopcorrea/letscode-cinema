@@ -8,7 +8,7 @@ namespace Letscode_Cinema.Models
 {
     public class Cart
     {
-        public User UserId { get; set; }
+        public int UserId { get; set; }
         public Session SessionId { get; set; }
         public List<int[]> Seats { get; set; }
         public Dictionary<int, int> FoodIds { get; set; }

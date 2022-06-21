@@ -12,6 +12,7 @@ namespace Letscode_Cinema.Models
         public double Price { get; set; }
         public DateTime Date { get; set; }
 
+
         //listar tickets
         //criar ticket
     }

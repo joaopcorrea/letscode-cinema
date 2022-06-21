@@ -69,7 +69,7 @@ namespace Letscode_Cinema.Views
                 if (user == null)
                 {
                     Console.Clear();
-                    Console.WriteLine("Usuario nao encontrado.");
+                    Console.WriteLine("Usuário não encontrado.");
                 }
                 else
                 {

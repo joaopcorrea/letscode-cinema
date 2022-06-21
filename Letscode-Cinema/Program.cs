@@ -16,7 +16,6 @@ namespace Letscode_Cinema
             login.Show();
 
             User user = new User();
-            user.BirthDate = DateTime.Now.AddYears(-15);
 
             bool chosen = false;
             while (!chosen)
@@ -40,9 +39,7 @@ namespace Letscode_Cinema
                     FoodList foodList = new FoodList();
                     Dictionary<int, int> chosenFoods = foodList.ShowFoods();
 
-                    User userLogin = Database.GetUser(1);
-
-                    TicketList ticketList = new TicketList(userLogin, session, chosenSeats, chosenFoods);
+                    TicketList ticketList = new TicketList(session, chosenSeats, chosenFoods);
                     ticketList.ShowTicket();
                 }
                 catch (Exception ex)
@@ -50,13 +47,6 @@ namespace Letscode_Cinema
                     Console.WriteLine(ex.Message);
                 }
             }
-
-            //FoodList foodList = new FoodList();
-            //Dictionary<int, int> chosenFoods = foodList.ShowFoods();
-
-            //TicketList ticketList = new TicketList(chosenFoods);
-            //ticketList.ShowTicket();
-
         }
     }
 }

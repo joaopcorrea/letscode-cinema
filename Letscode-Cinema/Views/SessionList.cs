@@ -10,7 +10,7 @@ namespace Letscode_Cinema.Views
 {
     internal class SessionList
     {
-        List<Session> sessions = Database.GetSession();
+        List<Session> sessions = Database.GetSessions();
 
         public void ShowSessions(int movieId)
         {
@@ -59,7 +59,7 @@ namespace Letscode_Cinema.Views
                     }
                     else
                     {
-                        session = Database.GetSession().FirstOrDefault(session => session.Id == sessionId);
+                        session = Database.GetSessions().FirstOrDefault(session => session.Id == sessionId);
                         if (session == null)
                             Console.Write("Opção inválida. ");
                     }

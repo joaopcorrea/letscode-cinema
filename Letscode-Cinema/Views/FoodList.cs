@@ -45,10 +45,10 @@ namespace Letscode_Cinema.Views
                          + " ------ " + food.Price.ToString("C"));
                 }
                 Console.WriteLine();
-                Console.WriteLine("Escolha o número da comida que deseja: ");
+                Console.Write("Escolha o número da comida que deseja: ");
                 int.TryParse(Console.ReadLine(), out chooseFood);
 
-                Console.WriteLine("Digite a quantidade que deseja: ");
+                Console.Write("Digite a quantidade que deseja: ");
                 int.TryParse(Console.ReadLine(), out int quantity);
 
                 if (!dictChooseFood.TryGetValue(chooseFood, out price))
