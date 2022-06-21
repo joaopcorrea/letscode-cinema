@@ -282,6 +282,12 @@ namespace Letscode_Cinema.Services
             return users;
         }
 
+        public static User GetUser(int userId)
+        {
+            User user = GetUsers().FirstOrDefault(u => u.Id == userId);
+            return user;
+        }
+
         public static bool AddUser(User user)
         {
             List<User> users = GetUsers();
@@ -404,13 +410,25 @@ namespace Letscode_Cinema.Services
             return true;
         }
 
-        public static List<Ticket> GetTicket()
+        public static List<Ticket> GetTickets(int userId)
         {
             string file = "database/ticket";
             string json = File.ReadAllText(file);
 
             List<Ticket> tickets = JsonConvert.DeserializeObject<List<Ticket>>(json);
-            return tickets;
+            return tickets.Where(t => t.UserId == userId).ToList();
+        }
+
+        public static bool CreateTicket(Ticket ticket)
+        {
+            List<Ticket> tickets = GetTickets(ticket.UserId);
+            ticket.Id = tickets.Count == 0 ? 1 : tickets.Max(t => t.Id) + 1;
+            tickets.Add(ticket);
+
+            string json = JsonConvert.SerializeObject(tickets);
+            File.WriteAllText("database/ticket", json);
+
+            return true;
         }
     }
 }
