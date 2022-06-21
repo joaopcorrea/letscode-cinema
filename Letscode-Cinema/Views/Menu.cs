@@ -33,5 +33,17 @@ namespace Letscode_Cinema.Views
             Console.WriteLine($"{session.Room.Cinema.CinemaName} - {session.Room.RoomName}");
             Console.WriteLine($"{session.Date:dddd dd/MM HH:mm}\n");
         }
+
+        public void DrawMainMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("Digite uma opção: \n");
+            Console.WriteLine("1. Escolher Filme");
+            Console.WriteLine("2. Escolher Comida");
+            Console.WriteLine("3. Visualizar Carrinho");
+            Console.WriteLine("4. Consultar Tickets");
+            Console.WriteLine("5. Sair");
+            Console.WriteLine();
+        }
     }
 }
