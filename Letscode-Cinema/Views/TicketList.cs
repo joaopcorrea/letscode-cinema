@@ -13,9 +13,9 @@ namespace Letscode_Cinema.Views
         Ticket ticket = new Ticket();
         public TicketList(User pUserLogin, Session pSession, List<int[]> pChosenSeats, Dictionary<int, int> pChosenFoods)
         {
-            ticket.UserId = pUserLogin;
-            ticket.SessionId = pSession;
-            ticket.Seats = pChosenSeats;
+            ticket.UserId = pUserLogin.Id;
+            ticket.SessionId = pSession.Id;
+            //ticket.Seats = pChosenSeats;
             ticket.FoodIds = pChosenFoods;
         }
 
@@ -32,12 +32,12 @@ namespace Letscode_Cinema.Views
             //    const string letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             //    Console.WriteLine(string.Join("", seat));
             //}
-            foreach (int[] seat in ticket.Seats)
-            {
-                Console.Write($"{seat[0]}{seat[1]}, ");
-            }
+
+            //foreach (int[] seat in ticket.Seats)
+            //{
+            //    Console.Write($"{seat[0]}{seat[1]}, ");
+            //}
             Console.WriteLine();
-            if 
             Console.WriteLine("| Comida: ");
             double totalFoodValue = 0;
             foreach (var food in ticket.FoodIds)
