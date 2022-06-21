@@ -11,8 +11,9 @@ namespace Letscode_Cinema.Views
 {
     internal class Login : Menu
     {
-        public void Show()
+        public User Show()
         {
+            User user = new User();
             DrawMenu("Login");
 
             string opcao = "";
@@ -30,11 +31,11 @@ namespace Letscode_Cinema.Views
                 switch (opcao)
                 {
                     case "1":
-                        SignIn();
+                        return SignIn();
                         break;
 
                     case "2":
-                        SignUp();
+                        return SignUp();
                         break;
 
                     case "3":
@@ -47,9 +48,11 @@ namespace Letscode_Cinema.Views
                 }
             }
             while (opcao != "3");
+
+            return null;
         }
 
-        private void SignIn()
+        private User SignIn()
         {
             try
             {
@@ -68,15 +71,19 @@ namespace Letscode_Cinema.Views
                 Console.WriteLine("Usuário encontrado!");
                 Console.WriteLine($"Id:{user.Id}\nNome:{user.Name}");
                 Console.ReadLine();
+
+                return user;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Erro: " + ex.Message);
                 Console.ReadLine();
             }
+
+            return null;
         }
 
-        private void SignUp()
+        private User SignUp()
         {
             try
             {
@@ -112,12 +119,16 @@ namespace Letscode_Cinema.Views
                 };
 
                 Database.AddUser(user);
+
+                return user;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Erro: " + ex.ToString());
                 Console.ReadLine();
             }
+
+            return null;
         }
     }
 }

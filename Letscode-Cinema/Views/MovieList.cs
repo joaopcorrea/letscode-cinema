@@ -11,7 +11,7 @@ namespace Letscode_Cinema.Views
 {
     public class MovieList : Menu
     {
-        List<Movie> movies = Database.GetMovie();
+        List<Movie> movies = Database.GetMovies();
 
         public void ShowMovies()
         {
@@ -42,7 +42,7 @@ namespace Letscode_Cinema.Views
                     Console.Write("Digite o numero do filme. ");
                 else
                 {
-                    movie = Database.GetMovie().FirstOrDefault(movie => movie.Id == movieId);
+                    movie = Database.GetMovies().FirstOrDefault(movie => movie.Id == movieId);
                     if (movie == null)
                         Console.Write("Opcao invalida. ");
                 }
@@ -50,11 +50,6 @@ namespace Letscode_Cinema.Views
             Console.Clear();
 
             return movie;
-        }
-
-        internal Movie ChooseMovie()
-        {
-            throw new NotImplementedException();
         }
     }
 }

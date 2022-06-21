@@ -10,23 +10,17 @@ namespace Letscode_Cinema.Views
 {
     public class SeatList : Menu
     {
-        public List<int[]> ChooseSeats(Session session)
+        public List<int[]> ChooseSeats(int userId, Session session)
         {
-            DrawMenu("Escolher assentos");
-
-            List<int[]> seatsChosen = new List<int[]>();
-            Movie movie = Database.GetMovie(session.MovieId);
+            List<int[]> seatsChosen = new List<int[]>();            
 
             bool exit = false;
-
             do
             {
                 try
                 {
-                    Console.Clear();
-                    Console.WriteLine($"{movie.Title}");
-                    Console.WriteLine($"{session.Room.Cinema.CinemaName} - {session.Room.RoomName}");
-                    Console.WriteLine($"{session.Date:dddd dd/MM HH:mm}");
+                    DrawMenu("Escolher assentos");
+                    DrawSessionMenu(session.Id);
 
                     if (seatsChosen.Count > 0)
                     {
@@ -73,7 +67,6 @@ namespace Letscode_Cinema.Views
                         if (Console.ReadLine().ToUpper() != "S")
                         {
                             exit = true;
-                            return seatsChosen;
                         }
                     }
                 }
@@ -95,6 +88,21 @@ namespace Letscode_Cinema.Views
                 }
             }
             while (!exit);
+
+            CartList cart = new CartList(userId);
+            foreach (var seat in seatsChosen)
+            {
+                Cart.CartItem item = new Cart.CartItem()
+                {
+                    Id = GetSeatName(seat[0], seat[1]),
+                    Description = "ASSENTO",
+                    Quantity = 1,
+                    Price = session.Price,
+                    TotalPrice = session.Price
+                };
+
+                cart.AddItemToCart(item);
+            }
 
             return null;
         }
