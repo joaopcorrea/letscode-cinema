@@ -23,9 +23,10 @@ namespace Letscode_Cinema.Views
                 Console.WriteLine($"    Classificacao indicativa: +{movie.MinimumAge}");
                 Console.WriteLine($"    Avaliacao: {movie.Review}");
             }
+            Console.WriteLine("Digite 0 para voltar.");
         }
 
-        public Movie ChooseMovie()
+        public Movie ChooseMovie(User user)
         {
             this.ShowMovies();
             Console.WriteLine();
@@ -40,11 +41,18 @@ namespace Letscode_Cinema.Views
                 choiseIsInt = Int32.TryParse(choise, out movieId);
                 if (!choiseIsInt)
                     Console.Write("Digite o numero do filme. ");
+                else if (movieId == 0)
+                    return null;
                 else
                 {
                     movie = Database.GetMovies().FirstOrDefault(movie => movie.Id == movieId);
                     if (movie == null)
                         Console.Write("Opcao invalida. ");
+                    else if ((DateTime.Now - user.BirthDate).Days < movie.MinimumAge * 365)
+                    {
+                        Console.WriteLine($"É preciso ter mais de {movie.MinimumAge} anos para comprar ingressos para o filme {movie.Title}.");
+                        choiseIsInt = false;
+                    }
                 }
             } while (!choiseIsInt || movie == null);
             Console.Clear();

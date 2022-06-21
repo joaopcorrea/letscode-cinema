@@ -29,14 +29,15 @@ namespace Letscode_Cinema.Views
             }
         }
 
-        public Session ChooseSession(Movie movie, User user)
+        public Session ChooseSession(Movie movie)
         {
-            if ((DateTime.Now - user.BirthDate).Days < movie.MinimumAge*365)
-                 throw new Exception($"É preciso ter mais de {movie.MinimumAge} anos para comprar ingressos para o filme {movie.Title}.{System.Environment.NewLine}Escolha outro filme.");
             if (sessions.Count() <= 0)
                 throw new Exception($"Nenhuma sessão disponível para o filme {movie.Title}");
-            Console.WriteLine("Sessões disponíveis para o filme " + movie.Title);
-            this.ShowSessions(movie.Id);
+            else
+            {
+                Console.WriteLine("Sessões disponíveis para o filme " + movie.Title);
+                this.ShowSessions(movie.Id);
+            }
             Console.WriteLine("Digite 0 para voltar.");
             Console.WriteLine();
 
@@ -59,7 +60,7 @@ namespace Letscode_Cinema.Views
                     }
                     else
                     {
-                        session = Database.GetSessions().FirstOrDefault(session => session.Id == sessionId);
+                        session = Database.GetSessions().FirstOrDefault(session => session.Id == sessionId && session.MovieId == movie.Id);
                         if (session == null)
                             Console.Write("Opção inválida. ");
                     }

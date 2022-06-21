@@ -20,11 +20,11 @@ namespace Letscode_Cinema
                 user = login.Show();
             } while (user == null);
 
+            Menu menu = new Menu();
             string option;
             do
             {
-                DrawOptions();
-
+                menu.DrawMainMenu();
                 option = Console.ReadLine();
 
                 Console.Clear();
@@ -34,19 +34,28 @@ namespace Letscode_Cinema
                         try
                         {
                             MovieList movieList = new MovieList();
-                            Movie movie = movieList.ChooseMovie();
-
                             SessionList sessionList = new SessionList();
-
-                            Session session = sessionList.ChooseSession(movie, user);
-                            if (session != null)
+                            Movie movie = null;
+                            do
                             {
-                                CartList cart = new CartList(user.Id);
-                                cart.ChangeCartSession(session.Id);
+                                movie = movieList.ChooseMovie(user);
+                                if (movie != null)
+                                {
+                                    Session session = null;
+                                    do
+                                    {
+                                        session = sessionList.ChooseSession(movie);
+                                        if (session != null)
+                                        {
+                                            //CartList cart = new CartList(user.Id);
+                                            //cart.ChangeCartSession(session.Id);
 
-                                SeatList seatList = new SeatList();
-                                seatList.ChooseSeats(user.Id, session);
-                            }
+                                            SeatList seatList = new SeatList();
+                                            seatList.ChooseSeats(user.Id, session);
+                                        }
+                                    } while (session != null);
+                                }
+                            } while (movie != null);
                         }
                         catch (Exception ex)
                         {
@@ -103,21 +112,7 @@ namespace Letscode_Cinema
                         Console.WriteLine("Opção inválida!");
                         break;
                 }
-                Console.ReadLine();
-            }
-            while (option != "5");
-        }
-
-        private static void DrawOptions()
-        {
-            Console.Clear();
-            Console.WriteLine("Digite uma opção: \n");
-            Console.WriteLine("1. Escolher Filme");
-            Console.WriteLine("2. Escolher Comida");
-            Console.WriteLine("3. Visualizar Carrinho");
-            Console.WriteLine("4. Consultar Tickets");
-            Console.WriteLine("5. Sair");
-            Console.WriteLine();
+            } while (option != "5");
         }
     }
 }

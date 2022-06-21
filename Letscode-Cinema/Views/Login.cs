@@ -24,7 +24,8 @@ namespace Letscode_Cinema.Views
                 Console.WriteLine("1. Entrar");
                 Console.WriteLine("2. Registrar");
                 Console.WriteLine("3. Sair");
-
+                Console.WriteLine();
+                Console.Write("Digite uma opção: ");
                 opcao = Console.ReadLine();
                 Console.Clear();
 
