@@ -24,7 +24,7 @@ namespace Letscode_Cinema.Views
             int quantityDietCoke = 0;
             double priceDietCoke = 0;
             string[] validateFood = new string[4];
-            string answer = "sim";
+            string answer = "S";
 
             do
             {
@@ -108,10 +108,10 @@ namespace Letscode_Cinema.Views
                     }
                 }
                 Console.WriteLine();
-                Console.WriteLine("Deseja continuar comprando? Sim/não");
-                answer = Console.ReadLine().ToLower();
+                Console.WriteLine("Deseja continuar comprando? (S / N)");
+                answer = Console.ReadLine().ToUpper();
             }
-            while (answer == "sim");
+            while (answer == "S");
             Console.Clear();
             return chosenFood;
         }

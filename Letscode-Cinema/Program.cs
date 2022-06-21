@@ -84,8 +84,8 @@ namespace Letscode_Cinema
                     case "4":
                         try
                         {
-                            //TicketList ticketList = new TicketList(chosenFoods);
-                            //ticketList.ShowTicket();
+                            TicketList ticketList = new TicketList(user.Id);
+                            ticketList.ShowTicket();
                         }
                         catch (Exception ex)
                         {
