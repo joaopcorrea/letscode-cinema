@@ -33,29 +33,7 @@ namespace Letscode_Cinema
                     case "1":
                         try
                         {
-                            MovieList movieList = new MovieList();
-                            SessionList sessionList = new SessionList();
-                            Movie movie = null;
-                            do
-                            {
-                                movie = movieList.ChooseMovie(user);
-                                if (movie != null)
-                                {
-                                    Session session = null;
-                                    do
-                                    {
-                                        session = sessionList.ChooseSession(movie);
-                                        if (session != null)
-                                        {
-                                            //CartList cart = new CartList(user.Id);
-                                            //cart.ChangeCartSession(session.Id);
-
-                                            SeatList seatList = new SeatList();
-                                            seatList.ChooseSeats(user.Id, session);
-                                        }
-                                    } while (session != null);
-                                }
-                            } while (movie != null);
+                            ChooseMovie(user);
                         }
                         catch (Exception ex)
                         {
@@ -67,8 +45,7 @@ namespace Letscode_Cinema
                     case "2":
                         try
                         {
-                            FoodList foodList = new FoodList();
-                            Dictionary<int, int> chosenFoods = foodList.ShowFoods();
+                            ChooseFood();
                         }
                         catch (Exception ex)
                         {
@@ -80,8 +57,7 @@ namespace Letscode_Cinema
                     case "3":
                         try
                         {
-                            CartList cartList = new CartList(1);
-                            cartList.ShowCart();
+                            ShowCart(user);
                         }
                         catch (Exception ex)
                         {
@@ -93,9 +69,7 @@ namespace Letscode_Cinema
                     case "4":
                         try
                         {
-                            Cart cart = Database.GetCart(user.Id);
-                            TicketList ticketList = new TicketList(cart);
-                            ticketList.ListTickets();
+                            SelectTickets(user);
                         }
                         catch (Exception ex)
                         {
@@ -113,6 +87,47 @@ namespace Letscode_Cinema
                         break;
                 }
             } while (option != "5");
+        }
+
+        private static void SelectTickets(User user)
+        {
+            Cart cart = Database.GetCart(user.Id);
+            TicketList ticketList = new TicketList(cart);
+            ticketList.ListTickets();
+        }
+
+        private static void ShowCart(User user)
+        {
+            CartList cartList = new CartList(user.Id);
+            cartList.ShowCart();
+        }
+
+        private static void ChooseFood()
+        {
+            FoodList foodList = new FoodList();
+            Dictionary<int, int> chosenFoods = foodList.ShowFoods();
+        }
+
+        private static void ChooseMovie(User user)
+        {
+            MovieList movieList = new MovieList();
+            SessionList sessionList = new SessionList();
+
+            Movie movie = null;
+                movie = movieList.ChooseMovie(user);
+                if (movie != null)
+                {
+                    Session session = null;
+                    session = sessionList.ChooseSession(movie);
+                    if (session != null)
+                    {
+                        CartList cart = new CartList(user.Id);
+                        cart.ChangeCartSession(session.Id);
+
+                        SeatList seatList = new SeatList();
+                        seatList.ChooseSeats(user.Id, session);
+                    }
+                }
         }
     }
 }
