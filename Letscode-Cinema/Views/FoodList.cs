@@ -28,8 +28,7 @@ namespace Letscode_Cinema.Views
 
             do
             {
-                Console.Clear();
-                DrawMenu("Escolher comida");
+                DrawMenu("ESCOLHER COMIDA");
 
                 Dictionary<int, double> dictChooseFood = new Dictionary<int, double>(4);
                 dictChooseFood.Add(1, 12);
@@ -37,7 +36,6 @@ namespace Letscode_Cinema.Views
                 dictChooseFood.Add(3, 5);
                 dictChooseFood.Add(4, 4.5);
 
-                Console.WriteLine("-------- C O M I D A ------------------");
                 List<Food> foodList = Database.GetFoods();
                 foreach (var food in foodList)
                 {

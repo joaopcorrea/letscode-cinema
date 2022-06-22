@@ -11,12 +11,8 @@ namespace Letscode_Cinema.Views
     public class TicketList : Menu
     {
         Cart cart;
+        List <Food> foods;
 
-        //parametro como carrinho, somente colocar um for de quantidade, descrição
-        //lista antes com os tickets que possuem, imprimir o ticket
-        //Chamar método da database de criação de ticket, vincular com a classe ticket
-        //Receber ojeto da classe carrinho, pegar infos, novo objeto de ticket mandar pra database
-        //Carrinho.items.Quantidade = gerar ticket que via para o database
         public TicketList(Cart cart)
         {
             this.cart = cart;
@@ -55,17 +51,20 @@ namespace Letscode_Cinema.Views
         private void ShowTicket(Ticket ticket)
         {
             User user = Database.GetUser(ticket.UserId);
-
-            Console.WriteLine($"Número: {ticket.Id}");
+            Session session = Database.GetSession(ticket.SessionId);
+            DrawMenu($"TICKET Nº {ticket.Id}");
+            Console.WriteLine($"Cinema: {session.Room.Cinema.CinemaName}, {session.Room.Cinema.City}");
+            DrawSessionMenu(cart.SessionId);
+            Console.WriteLine($"Horário: +{session.Date.ToString("t")}");
             Console.WriteLine($"Data: {ticket.Date}");
             Console.WriteLine($"Preço: {ticket.Price}");
             Console.WriteLine($"Usuário: {user.Name}");
-
-            foreach (var item in ticket.Items)
+            Console.WriteLine("Id\tQtd\tDescrição\tTotal");
+            foreach (var item in ticket.Items.OrderBy(t => t.Description))
             {
-                Console.WriteLine($"{item.Id}\t{item.Quantity}x\t{item.Description}\t{item.TotalPrice}");
+                Console.WriteLine($"{item.Id}\t{item.Quantity}x\t{item.Description}\t"
+                    + $"        {item.TotalPrice.ToString("C")}");
             }
-
             Console.ReadLine();
         }
 
@@ -128,17 +127,5 @@ namespace Letscode_Cinema.Views
 
             return indexes;
         }
-
-
-        //public TicketList(Session pSession, List<int[]> pChosenSeats, Dictionary<int, int> pChosenFoods)
-        //{
-        //    //ticket.UserId = pUser;
-        //    ticket.SessionId = pSession;
-        //    ticket.Seats = pChosenSeats;
-        //    ticket.FoodIds = pChosenFoods;
-        //}
-        //    Console.WriteLine("|\n| Valor total da compra: " 
-        //        + (totalFoodValue + ticket.Price).ToString("C") + "\n");
-        //}
     }
 }

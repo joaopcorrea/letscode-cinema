@@ -19,7 +19,7 @@ namespace Letscode_Cinema.Views
             {
                 try
                 {
-                    DrawMenu("Escolher assentos");
+                    DrawMenu("ESCOLHER ASSENTOS");
                     DrawSessionMenu(session.Id);
 
                     if (seatsChosen.Count > 0)
@@ -28,7 +28,7 @@ namespace Letscode_Cinema.Views
                         string chosenSeats = "";
                         foreach (int[] s in seatsChosen)
                         {
-                            chosenSeats = chosenSeats + GetSeatName(s[0], s[1]) + ", ";
+                            chosenSeats += $"{GetSeatName(s[0], s[1])}, ";
                         }
                         chosenSeats = chosenSeats.Remove(chosenSeats.Length - 2);
                         Console.WriteLine(chosenSeats);

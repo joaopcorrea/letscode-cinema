@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Letscode_Cinema.Views
 {
-    public class SessionList
+    public class SessionList : Menu
     {
         List<Session> sessions = Database.GetSessions();
 
@@ -20,6 +20,7 @@ namespace Letscode_Cinema.Views
                 {
                     Console.WriteLine($"Sessão {session.Id}:");
                     Console.WriteLine($"    Cinema: {session.Room.Cinema.CinemaName}, {session.Room.Cinema.City}");
+                    Console.WriteLine($"    {session.Room.RoomName}");
                     Console.WriteLine($"    Data: {session.Date.ToString("d")}");
                     Console.WriteLine($"    Horário: +{session.Date.ToString("t")}");
                     Console.WriteLine($"    Preço: R$ {session.Price:N2}");
@@ -35,7 +36,7 @@ namespace Letscode_Cinema.Views
                 throw new Exception($"Nenhuma sessão disponível para o filme {movie.Title}");
             else
             {
-                Console.Clear();
+                DrawMenu("ESCOLHER SESSÃO");
                 Console.WriteLine("Sessões disponíveis para o filme " + movie.Title);
                 this.ShowSessions(movie.Id);
             }
