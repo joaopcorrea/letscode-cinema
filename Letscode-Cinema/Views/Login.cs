@@ -71,8 +71,9 @@ namespace Letscode_Cinema.Views
                 user = Database.GetUsers().FirstOrDefault(u => u.Email == email);
                 if (user == null)
                 {
-                    Console.Clear();
                     Console.WriteLine("Usuário não encontrado.");
+                    Console.ReadLine();
+                    return null;
                 }
                 else
                 {
