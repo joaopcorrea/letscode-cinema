@@ -1,7 +1,6 @@
 ﻿using Letscode_Cinema.Models;
 using Letscode_Cinema.Services;
 using Letscode_Cinema.Views;
-using Letscode_Cinema.Models;
 
 namespace Letscode_Cinema
 {
@@ -20,11 +19,11 @@ namespace Letscode_Cinema
                 user = login.Show();
             } while (user == null);
 
+            Menu menu = new Menu();
             string option;
             do
             {
-                DrawOptions();
-
+                menu.DrawMainMenu();
                 option = Console.ReadLine();
 
                 Console.Clear();
@@ -34,19 +33,28 @@ namespace Letscode_Cinema
                         try
                         {
                             MovieList movieList = new MovieList();
-                            Movie movie = movieList.ChooseMovie();
-
                             SessionList sessionList = new SessionList();
-
-                            Session session = sessionList.ChooseSession(movie, user);
-                            if (session != null)
+                            Movie movie = null;
+                            do
                             {
-                                CartList cart = new CartList(user.Id);
-                                cart.ChangeCartSession(session.Id);
+                                movie = movieList.ChooseMovie(user);
+                                if (movie != null)
+                                {
+                                    Session session = null;
+                                    do
+                                    {
+                                        session = sessionList.ChooseSession(movie);
+                                        if (session != null)
+                                        {
+                                            CartList cart = new CartList(user.Id);
+                                            cart.ChangeCartSession(session.Id);
 
-                                SeatList seatList = new SeatList();
-                                seatList.ChooseSeats(user.Id, session);
-                            }
+                                            SeatList seatList = new SeatList();
+                                            seatList.ChooseSeats(user.Id, session);
+                                        }
+                                    } while (session != null);
+                                }
+                            } while (movie != null);
                         }
                         catch (Exception ex)
                         {
@@ -58,8 +66,7 @@ namespace Letscode_Cinema
                     case "2":
                         try
                         {
-                            FoodList foodList = new FoodList();
-                            Dictionary<int, int> chosenFoods = foodList.ShowFoods();
+                            ChooseFood();
                         }
                         catch (Exception ex)
                         {
@@ -71,8 +78,7 @@ namespace Letscode_Cinema
                     case "3":
                         try
                         {
-                            CartList cartList = new CartList(1);
-                            cartList.ShowCart();
+                            ShowCart(user);
                         }
                         catch (Exception ex)
                         {
@@ -84,9 +90,7 @@ namespace Letscode_Cinema
                     case "4":
                         try
                         {
-                            Cart cart = Database.GetCart(user.Id);
-                            TicketList ticketList = new TicketList(cart);
-                            ticketList.ListTickets();
+                            SelectTickets(user);
                         }
                         catch (Exception ex)
                         {
@@ -103,21 +107,48 @@ namespace Letscode_Cinema
                         Console.WriteLine("Opção inválida!");
                         break;
                 }
-                Console.ReadLine();
-            }
-            while (option != "5");
+            } while (option != "5");
         }
 
-        private static void DrawOptions()
+        private static void SelectTickets(User user)
         {
-            Console.Clear();
-            Console.WriteLine("Digite uma opção: \n");
-            Console.WriteLine("1. Escolher Filme");
-            Console.WriteLine("2. Escolher Comida");
-            Console.WriteLine("3. Visualizar Carrinho");
-            Console.WriteLine("4. Consultar Tickets");
-            Console.WriteLine("5. Sair");
-            Console.WriteLine();
+            Cart cart = Database.GetCart(user.Id);
+            TicketList ticketList = new TicketList(cart);
+            ticketList.ListTickets();
+        }
+
+        private static void ShowCart(User user)
+        {
+            CartList cartList = new CartList(user.Id);
+            cartList.ShowCart();
+        }
+
+        private static void ChooseFood()
+        {
+            FoodList foodList = new FoodList();
+            Dictionary<int, int> chosenFoods = foodList.ShowFoods();
+        }
+
+        private static void ChooseMovie(User user)
+        {
+            MovieList movieList = new MovieList();
+            SessionList sessionList = new SessionList();
+
+            Movie movie = null;
+                movie = movieList.ChooseMovie(user);
+                if (movie != null)
+                {
+                    Session session = null;
+                    session = sessionList.ChooseSession(movie);
+                    if (session != null)
+                    {
+                        CartList cart = new CartList(user.Id);
+                        cart.ChangeCartSession(session.Id);
+
+                        SeatList seatList = new SeatList();
+                        seatList.ChooseSeats(user.Id, session);
+                    }
+                }
         }
     }
 }

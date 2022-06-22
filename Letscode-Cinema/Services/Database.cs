@@ -273,6 +273,19 @@ namespace Letscode_Cinema.Services
             return session;
         }
 
+        public static bool UpdateSessionSeats(int sessionId, int[,] seats)
+        {
+            List<Session> sessions = GetSessions();
+            Session session = sessions.FirstOrDefault(s => s.Id == sessionId);
+
+            session.SeatsUserId = seats;
+
+            string json = JsonConvert.SerializeObject(sessions);
+            File.WriteAllText("database/session", json);
+
+            return true;
+        }
+
         public static List<User> GetUsers()
         {
             string file = "database/user";
@@ -394,6 +407,10 @@ namespace Letscode_Cinema.Services
             List<Cart> carts = GetCarts();
 
             var cart = carts.FirstOrDefault(c => c.UserId == userId);
+            if (cart == null)
+            {
+                cart = AddCart(userId);
+            }
 
             cart.SessionId = sessionId;
 
@@ -427,6 +444,23 @@ namespace Letscode_Cinema.Services
 
             string json = JsonConvert.SerializeObject(tickets);
             File.WriteAllText("database/ticket", json);
+
+            ClearCart(ticket.UserId);
+
+            return true;
+        }
+
+        private static bool ClearCart(int userId)
+        {
+            List<Cart> carts = GetCarts();
+
+            var cart = carts.FirstOrDefault(c => c.UserId == userId);
+
+            cart.UserId = userId;
+            cart.SessionId = 0;
+            cart.Items = new List<Cart.CartItem>();
+
+            UpdateCarts(carts);
 
             return true;
         }

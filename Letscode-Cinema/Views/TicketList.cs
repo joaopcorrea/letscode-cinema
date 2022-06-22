@@ -12,8 +12,11 @@ namespace Letscode_Cinema.Views
     {
         Cart cart;
 
-        Ticket ticket = new Ticket();
-
+        //parametro como carrinho, somente colocar um for de quantidade, descrição
+        //lista antes com os tickets que possuem, imprimir o ticket
+        //Chamar método da database de criação de ticket, vincular com a classe ticket
+        //Receber ojeto da classe carrinho, pegar infos, novo objeto de ticket mandar pra database
+        //Carrinho.items.Quantidade = gerar ticket que via para o database
         public TicketList(Cart cart)
         {
             this.cart = cart;
@@ -27,6 +30,7 @@ namespace Letscode_Cinema.Views
             do
             {
 
+                Console.Clear();
                 foreach (var t in tickets)
                 {
                     Console.WriteLine($"Ticket N {t.Id}");
@@ -62,37 +66,7 @@ namespace Letscode_Cinema.Views
                 Console.WriteLine($"{item.Id}\t{item.Quantity}x\t{item.Description}\t{item.TotalPrice}");
             }
 
-            //Console.WriteLine("Comida: ");
-            //double totalFoodValue = 0;
-            //foreach (var food in ticket.Foods)
-            //{
-            //    if (food.Key == 1)
-            //    {
-            //        Console.WriteLine($"{food.Key} Pipoca Salgada --- "
-            //            + $"Quantidade: {food.Value} --- Preço: {food.Value * 12}");
-            //        totalFoodValue += food.Value * 12;
-            //    }
-            //    else if (food.Key == 2)
-            //    {
-            //        Console.WriteLine($"{food.Key} Pipoca Doce ------ "
-            //            + $"Quantidade: {food.Value} --- Preço: {food.Value * 14}");
-            //        totalFoodValue += food.Value * 14;
-            //    }
-            //    else if (food.Key == 3)
-            //    {
-            //        Console.WriteLine($"{food.Key} Coca-Cola -------- "
-            //           + $"Quantidade: {food.Value} --- Preço: {food.Value * 5}");
-            //        totalFoodValue += food.Value * 5;
-            //    }
-            //    else
-            //    {
-            //        Console.WriteLine($"{food.Key} Coca-Cola Diet --- "
-            //           + $"Quantidade: {food.Value} --- Preço: {food.Value * 4.5}");
-            //        totalFoodValue += food.Value * 4.5;
-            //    }
-
-            //    Console.ReadLine();
-            //}
+            Console.ReadLine();
         }
 
         public void CreateTicket()
@@ -110,6 +84,7 @@ namespace Letscode_Cinema.Views
                 ticket.Price = cart.Items.Sum(c => c.TotalPrice);
 
                 Database.CreateTicket(ticket);
+                UpdateSessionSeats(ticket.SessionId, ticket);
 
                 Console.WriteLine("Ticket criado com sucesso!");
 
@@ -121,6 +96,39 @@ namespace Letscode_Cinema.Views
                 Console.WriteLine(ex.StackTrace);
             }
         }
+
+        private void UpdateSessionSeats(int sessionId, Ticket ticket)
+        {
+            Session session = Database.GetSession(sessionId);
+
+            List<int[]> seats = new List<int[]>();
+
+            foreach (var item in ticket.Items)
+            {
+                if (item.Description == "ASSENTO")
+                {
+                    seats.Add(GetSeatIndexes(item.Id));
+                }
+            }
+
+            foreach (var seat in seats)
+            {
+                session.SeatsUserId[seat[0], seat[1]] = ticket.UserId;
+            }
+
+            Database.UpdateSessionSeats(sessionId, session.SeatsUserId);
+        }
+
+        private int[] GetSeatIndexes(string seat)
+        {
+            int[] indexes = new int[2];
+
+            indexes[0] = char.Parse(seat[..1].ToUpper()) - 65;
+            indexes[1] = Convert.ToInt32(seat[1..]);
+
+            return indexes;
+        }
+
 
         //public TicketList(Session pSession, List<int[]> pChosenSeats, Dictionary<int, int> pChosenFoods)
         //{

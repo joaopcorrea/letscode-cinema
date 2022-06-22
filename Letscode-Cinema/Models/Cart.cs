@@ -10,8 +10,6 @@ namespace Letscode_Cinema.Models
     {
         public int UserId { get; set; }
         public int SessionId { get; set; }
-        public string[] Seats { get; set; }
-        public Dictionary<int, int> Foods { get; set; }
         public List<CartItem> Items { get; set; }
 
         public class CartItem
