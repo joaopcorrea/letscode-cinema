@@ -12,7 +12,18 @@ namespace Letscode_Cinema.Views
     {
         public bool ChooseSeats(int userId, Session session)
         {
-            List<int[]> seatsChosen = new List<int[]>();            
+            List<int[]> seatsChosen = new List<int[]>();      
+            List<int[]> seatsInCart = new List<int[]>();
+
+            Cart c = Database.GetCart(userId);
+
+            foreach (var item in c.Items)
+            {
+                if (item.Description == "ASSENTO")
+                {
+                    seatsInCart.Add(GetSeatIndexes(item.Id));
+                }
+            }
 
             bool exit = false;
             do
@@ -22,12 +33,17 @@ namespace Letscode_Cinema.Views
                     DrawMenu("Escolher Assentos");
                     DrawSessionMenu(session.Id);
 
-                    if (seatsChosen.Count > 0)
+                    if (seatsInCart.Count > 0 || seatsChosen.Count > 0)
                     {
-                        Console.Write("\nAssentos escolhidos: ");
+                        Console.Write("Assentos escolhidos: ");
                         string chosenSeats = "";
-                        
-                        foreach (int[] s in seatsChosen)
+
+                        foreach (var s in seatsInCart)
+                        {
+                            chosenSeats += $"{GetSeatName(s[0], s[1])}, ";
+                        }
+
+                        foreach (var s in seatsChosen)
                         {
                             chosenSeats += $"{GetSeatName(s[0], s[1])}, ";
                         }
@@ -66,13 +82,16 @@ namespace Letscode_Cinema.Views
                         Console.WriteLine("Assento ocupado, escolha outro!");
                         Console.ReadLine();
                     }
-                    else if (seatsChosen.Exists(i => i[0] == indexes[0] && i[1] == indexes[1]))
+                    else if (seatsChosen.Exists(i => i[0] == indexes[0] && i[1] == indexes[1]) ||
+                             seatsInCart.Exists(i => i[0] == indexes[0] && i[1] == indexes[1]))
                     {
                         Console.WriteLine("Você já escolheu esse assento, escolha outro!");
                         Console.ReadLine();
                     }
                     else
-                    { 
+                    {
+                        
+
                         seatsChosen.Add(indexes);
                         Console.WriteLine("Gostaria de selecionar outro assento? (S / N)");
 

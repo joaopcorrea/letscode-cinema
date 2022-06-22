@@ -20,14 +20,22 @@ namespace Letscode_Cinema.Views
 
         public void ListTickets()
         {
-            DrawMenu("Lista de Tickets");
+            
 
             var tickets = Database.GetTickets(cart.UserId);
+
+            if (tickets.Count == 0)
+            {
+                DrawMenu("Não foram encontrados tickets!");
+                Console.ReadLine();
+                return;
+            }
 
             bool exit = false;
             do
             {
-                Console.Clear();
+                DrawMenu("Lista de Tickets");
+
                 Console.WriteLine("0. Voltar");
 
                 foreach (var t in tickets)
@@ -47,7 +55,9 @@ namespace Letscode_Cinema.Views
                 }
                 else if (ticket == null)
                 {
-                    throw new NullReferenceException("Ticket não existente!");
+                    Console.WriteLine("Ticket inexistente!");
+                    Console.ReadLine();
+                    continue;
                 }
 
                 ShowTicket(ticket);
@@ -63,15 +73,12 @@ namespace Letscode_Cinema.Views
 
             DrawMenu($"TICKET Nº {ticket.Id}");
             DrawSessionMenu(session.Id);
-            //Console.WriteLine($"{session.Room.Cinema.CinemaName}, {session.Room.Cinema.City}\n{session.Room.RoomName}");
-            //Console.WriteLine($"Data: {session.Date.ToString("d")}");
-            //Console.WriteLine($"Horário: +{session.Date.ToString("t")}");
             Console.WriteLine($"Preço: {ticket.Price:C}");
             Console.WriteLine($"Usuário: {user.Name}");
             Console.WriteLine("\nId\tQtd\tDescrição\tTotal");
             foreach (var item in ticket.Items.OrderBy(t => t.Description))
             {
-                Console.WriteLine($"{item.Id}\t{item.Quantity}x\t{item.Description.PadRight(15, ' ')}\t"
+                Console.WriteLine($"{item.Id}\t{item.Quantity}x\t{item.Description,-15}\t"
                     + $"{item.TotalPrice:C}");
             }
             Console.ReadLine();

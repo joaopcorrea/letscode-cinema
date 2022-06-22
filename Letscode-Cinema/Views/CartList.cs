@@ -34,11 +34,11 @@ namespace Letscode_Cinema.Views
                     Console.WriteLine("Id\tQtd\tDescrição\tTotal");
                     foreach (var item in cart.Items)
                     {
-                        Console.WriteLine($"{item.Id}\t{item.Quantity}x\t{item.Description}\tR$ {item.TotalPrice}");
+                        Console.WriteLine($"{item.Id}\t{item.Quantity}x\t{item.Description,-15}\tR$ {item.TotalPrice}");
                         totalPrice += item.TotalPrice;
                     }
 
-                    Console.WriteLine($"\nValor total: {totalPrice}\n");
+                    Console.WriteLine($"\nValor total: R$ {totalPrice:N2}\n");
 
                     Console.WriteLine("Escolha uma opção: \n");
                     Console.WriteLine("0. Voltar");

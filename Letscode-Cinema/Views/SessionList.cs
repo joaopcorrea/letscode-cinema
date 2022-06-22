@@ -22,7 +22,7 @@ namespace Letscode_Cinema.Views
                     Console.WriteLine();
                     Console.WriteLine($"{session.Id}. {session.Room.Cinema.CinemaName}, {session.Room.Cinema.City} - {session.Room.RoomName}");
                     Console.WriteLine($"    Data: {session.Date.ToString("d")}");
-                    Console.WriteLine($"    Horário: +{session.Date.ToString("t")}");
+                    Console.WriteLine($"    Horário: {session.Date:HH:mm}");
                     Console.WriteLine($"    Preço: R$ {session.Price:N2}");
                     if (session.Is3d)
                         Console.WriteLine($"    Sessão 3D");

@@ -36,6 +36,7 @@ namespace Letscode_Cinema.Views
                 dictChooseFood.Add(3, 5);
                 dictChooseFood.Add(4, 4.5);
 
+                Console.WriteLine("0 ------ Voltar");
                 List<Food> foodList = Database.GetFoods();
                 foreach (var food in foodList)
                 {
@@ -46,8 +47,20 @@ namespace Letscode_Cinema.Views
                 Console.Write("Escolha o número da comida que deseja: ");
                 int.TryParse(Console.ReadLine(), out chooseFood);
 
+                if (chooseFood == 0)
+                {
+                    return false;
+                }
+
                 Console.Write("Digite a quantidade que deseja: ");
                 int.TryParse(Console.ReadLine(), out int quantity);
+
+                if (quantity == 0)
+                {
+                    Console.WriteLine("Valor inválido!");
+                    Console.ReadLine();
+                    return false;
+                }
 
                 if (!dictChooseFood.TryGetValue(chooseFood, out price))
                 {

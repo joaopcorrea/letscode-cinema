@@ -423,17 +423,14 @@ namespace Letscode_Cinema.Services
 
             if (sessionId != cart.SessionId)
             {
-                ClearCart(userId);
+                ClearCart(userId, sessionId);
             }
-
-            if (cart == null)
+            else
             {
-                cart = AddCart(userId);
+                cart.SessionId = sessionId;
+
+                UpdateCarts(carts);
             }
-
-            cart.SessionId = sessionId;
-
-            UpdateCarts(carts);
 
             return true;
         }
@@ -469,14 +466,14 @@ namespace Letscode_Cinema.Services
             return true;
         }
 
-        private static bool ClearCart(int userId)
+        private static bool ClearCart(int userId, int sessionId = 0)
         {
             List<Cart> carts = GetCarts();
 
             var cart = carts.FirstOrDefault(c => c.UserId == userId);
 
             cart.UserId = userId;
-            cart.SessionId = 0;
+            cart.SessionId = sessionId;
             cart.Items = new List<Cart.CartItem>();
 
             UpdateCarts(carts);
