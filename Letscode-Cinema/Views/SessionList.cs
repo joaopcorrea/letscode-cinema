@@ -18,9 +18,7 @@ namespace Letscode_Cinema.Views
             {
                 if (session.MovieId == movieId)
                 {
-                    Console.WriteLine($"Sessão {session.Id}:");
-                    Console.WriteLine($"    Cinema: {session.Room.Cinema.CinemaName}, {session.Room.Cinema.City}");
-                    Console.WriteLine($"    {session.Room.RoomName}");
+                    Console.WriteLine($"{session.Id}. {session.Room.Cinema.CinemaName}, {session.Room.Cinema.City} - {session.Room.RoomName}");
                     Console.WriteLine($"    Data: {session.Date.ToString("d")}");
                     Console.WriteLine($"    Horário: +{session.Date.ToString("t")}");
                     Console.WriteLine($"    Preço: R$ {session.Price:N2}");

@@ -355,6 +355,11 @@ namespace Letscode_Cinema.Services
         public static Cart GetCart(int userId)
         {
             Cart cart = GetCarts().FirstOrDefault(c => c.UserId == userId);
+            
+            if (cart == null)
+            {
+                cart = Database.AddCart(userId);
+            }
 
             return cart;
         }
@@ -381,6 +386,11 @@ namespace Letscode_Cinema.Services
         {
             List<Cart> carts = GetCarts();
             Cart cart = carts.FirstOrDefault(c => c.UserId == userId);
+            
+            if (cart == null)
+            {
+                cart = Database.AddCart(userId);
+            }
 
             cart.Items.RemoveAt(cart.Items.IndexOf(item));
 
@@ -392,8 +402,12 @@ namespace Letscode_Cinema.Services
         public static bool AddCartItem(int userId, Cart.CartItem item)
         {
             List<Cart> carts = GetCarts();
-
             var cart = carts.FirstOrDefault(c => c.UserId == userId);
+            
+            if (cart == null)
+            {
+                cart = Database.AddCart(userId);
+            }
 
             cart.Items.Add(item);
 

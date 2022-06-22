@@ -153,11 +153,6 @@ namespace Letscode_Cinema.Views
         {
             Cart cart = Database.GetCart(userId);
 
-            if (cart == null)
-            {
-                cart = Database.AddCart(userId);
-            }
-
             return cart;
         }
 

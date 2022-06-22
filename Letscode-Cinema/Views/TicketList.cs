@@ -50,11 +50,14 @@ namespace Letscode_Cinema.Views
         {
             User user = Database.GetUser(ticket.UserId);
             Session session = Database.GetSession(ticket.SessionId);
+
             DrawMenu($"TICKET Nº {ticket.Id}");
-            Console.WriteLine($"Cinema: {session.Room.Cinema.CinemaName}, {session.Room.Cinema.City}");
-            DrawSessionMenu(cart.SessionId);
+            Console.WriteLine($"{session.Id}. {session.Room.Cinema.CinemaName}, {session.Room.Cinema.City} - {session.Room.RoomName}");
+            Console.WriteLine($"Data: {session.Date.ToString("d")}");
             Console.WriteLine($"Horário: +{session.Date.ToString("t")}");
-            Console.WriteLine($"Data: {ticket.Date}");
+            //Console.WriteLine(cart.SessionId);
+            //Console.ReadLine();
+            //DrawSessionMenu(cart.SessionId);
             Console.WriteLine($"Preço: {ticket.Price}");
             Console.WriteLine($"Usuário: {user.Name}");
             Console.WriteLine("Id\tQtd\tDescrição\tTotal");
