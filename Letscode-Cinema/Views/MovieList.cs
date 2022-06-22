@@ -15,6 +15,8 @@ namespace Letscode_Cinema.Views
 
         public void ShowMovies()
         {
+            Console.WriteLine("0. Voltar\n");
+
             foreach (Movie movie in movies)
             {
                 Console.WriteLine($"{movie.Id}. {movie.Title}");
@@ -22,8 +24,8 @@ namespace Letscode_Cinema.Views
                 Console.WriteLine($"    Minutos: {movie.Minutes}");
                 Console.WriteLine($"    Classificação indicativa: +{movie.MinimumAge}");
                 Console.WriteLine($"    Avaliação: {movie.Review}");
+                Console.WriteLine();
             }
-            Console.WriteLine("Digite '0' para voltar.");
         }
 
         public Movie ChooseMovie(User user)

@@ -10,7 +10,7 @@ namespace Letscode_Cinema.Views
 {
     public class SeatList : Menu
     {
-        public void ChooseSeats(int userId, Session session)
+        public bool ChooseSeats(int userId, Session session)
         {
             List<int[]> seatsChosen = new List<int[]>();            
 
@@ -19,7 +19,7 @@ namespace Letscode_Cinema.Views
             {
                 try
                 {
-                    DrawMenu("ESCOLHER ASSENTOS");
+                    DrawMenu("Escolher Assentos");
                     DrawSessionMenu(session.Id);
 
                     if (seatsChosen.Count > 0)
@@ -40,22 +40,17 @@ namespace Letscode_Cinema.Views
                     Console.WriteLine("Assentos disponíveis:");
 
                     DrawSeats(session);
-                    Console.WriteLine();
-                    Console.WriteLine("Digite '0' para retornar ao menu anterior.");
-                    if (seatsChosen.Count > 0)
-                        Console.WriteLine("Digite '1' para continuar com os assentos selecionados.");
-                    Console.WriteLine();
-                    Console.WriteLine("Digite '0' para retornar ao menu anterior.");
-                    Console.WriteLine("Escolha um assento: ");
 
+                    Console.WriteLine("\n0. Voltar");
                     if (seatsChosen.Count > 0)
-                        Console.WriteLine("Digite '1' para continuar com os assentos selecionados.");
+                        Console.WriteLine("\n1. Continuar");
                     Console.WriteLine();
+
                     Console.Write("Escolha um assento: ");
 
                     string seat = Console.ReadLine();
                     if (seat == "0")
-                        return;
+                        return false;
                     else if (seat == "1" && seatsChosen.Count > 0)
                     {
                         exit = true;
@@ -120,6 +115,8 @@ namespace Letscode_Cinema.Views
 
                 cart.AddItemToCart(item);
             }
+
+            return true;
         }
 
         private void DrawSeats(Session session)

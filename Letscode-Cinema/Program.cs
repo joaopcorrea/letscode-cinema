@@ -32,29 +32,7 @@ namespace Letscode_Cinema
                     case "1":
                         try
                         {
-                            MovieList movieList = new MovieList();
-                            SessionList sessionList = new SessionList();
-                            Movie movie = null;
-                            do
-                            {
-                                movie = movieList.ChooseMovie(user);
-                                if (movie != null)
-                                {
-                                    Session session = null;
-                                    do
-                                    {
-                                        session = sessionList.ChooseSession(movie);
-                                        if (session != null)
-                                        {
-                                            CartList cart = new CartList(user.Id);
-                                            cart.ChangeCartSession(session.Id);
-
-                                            SeatList seatList = new SeatList();
-                                            seatList.ChooseSeats(user.Id, session);
-                                        }
-                                    } while (session != null);
-                                }
-                            } while (movie != null);
+                            ChooseMovie(user);
                         }
                         catch (Exception ex)
                         {
@@ -66,7 +44,7 @@ namespace Letscode_Cinema
                     case "2":
                         try
                         {
-                            ChooseFood();
+                            ChooseFood(user);
                         }
                         catch (Exception ex)
                         {
@@ -123,32 +101,45 @@ namespace Letscode_Cinema
             cartList.ShowCart();
         }
 
-        private static void ChooseFood()
+        private static void ChooseFood(User user)
         {
             FoodList foodList = new FoodList();
-            Dictionary<int, int> chosenFoods = foodList.ShowFoods();
+            foodList.ShowFoods(user.Id);
         }
 
         private static void ChooseMovie(User user)
         {
             MovieList movieList = new MovieList();
             SessionList sessionList = new SessionList();
-
-            Movie movie = null;
+            Movie movie;
+            do
+            {
                 movie = movieList.ChooseMovie(user);
                 if (movie != null)
                 {
-                    Session session = null;
-                    session = sessionList.ChooseSession(movie);
-                    if (session != null)
+                    Session session;
+                    do
                     {
-                        CartList cart = new CartList(user.Id);
-                        cart.ChangeCartSession(session.Id);
+                        session = sessionList.ChooseSession(movie);
+                        if (session != null)
+                        {
+                            CartList cart = new CartList(user.Id);
+                            cart.ChangeCartSession(session.Id);
 
-                        SeatList seatList = new SeatList();
-                        seatList.ChooseSeats(user.Id, session);
-                    }
+                            SeatList seatList = new SeatList();
+                            if (seatList.ChooseSeats(user.Id, session))
+                            {
+                                Console.WriteLine("Deseja comprar comida? (S/N)");
+                                string option = Console.ReadLine();
+                                if (option.ToUpper() == "S")
+                                    ChooseFood(user);
+
+                                return;
+                            }
+                        }
+                    } while (session != null);
                 }
+            } while (movie != null);
         }
     }
 }

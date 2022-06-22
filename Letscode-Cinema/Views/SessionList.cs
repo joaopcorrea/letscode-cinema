@@ -14,10 +14,12 @@ namespace Letscode_Cinema.Views
 
         public void ShowSessions(int movieId)
         {
+            Console.WriteLine("\n0. Voltar");
             foreach (Session session in sessions)
             {
                 if (session.MovieId == movieId)
                 {
+                    Console.WriteLine();
                     Console.WriteLine($"{session.Id}. {session.Room.Cinema.CinemaName}, {session.Room.Cinema.City} - {session.Room.RoomName}");
                     Console.WriteLine($"    Data: {session.Date.ToString("d")}");
                     Console.WriteLine($"    Horário: +{session.Date.ToString("t")}");
@@ -36,12 +38,10 @@ namespace Letscode_Cinema.Views
             {
                 DrawMenu("Escolher Sessão");
 
-                Console.WriteLine("Sessões disponíveis para o filme " + movie.Title);
+                Console.WriteLine($"Sessões disponíveis para o filme\n{movie.Title}");
                 
                 ShowSessions(movie.Id);
             }
-
-            Console.WriteLine("Digite 0 para voltar.");
             Console.WriteLine();
 
             bool choiseIsInt = false;

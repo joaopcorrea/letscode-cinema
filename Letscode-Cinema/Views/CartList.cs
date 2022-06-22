@@ -42,8 +42,8 @@ namespace Letscode_Cinema.Views
 
                     Console.WriteLine("Escolha uma opção: \n");
                     Console.WriteLine("0. Voltar");
-                    Console.WriteLine("1. Finalizar compra");
-                    Console.WriteLine("2. Remover item");
+                    Console.WriteLine("1. Remover item");
+                    Console.WriteLine("2. Finalizar compra");
 
                     string opcao = Console.ReadLine();
                     switch (opcao)
@@ -52,11 +52,11 @@ namespace Letscode_Cinema.Views
                             return false;
 
                         case "1":
-                            exit = FinishCart();
+                            RemoveItem();
                             break;
 
                         case "2":
-                            RemoveItem();
+                            exit = FinishCart();
                             break;
 
                         default:
@@ -75,32 +75,6 @@ namespace Letscode_Cinema.Views
             while (!exit);
 
             return true;
-
-            //Console.WriteLine("\nAssentos: ");
-            //foreach (var seat in seats)
-            //{
-            //    Console.WriteLine($"Assento {GetSeatName(seat)} - R${session.Price}");
-            //    totalPrice += session.Price;
-
-
-            //}
-
-            //Console.WriteLine("\nComidas: ");
-            //foreach (var foodIndex in foods)
-            //{
-            //    var food = Database.GetFoods(foodIndex.Key);
-            //    double price = food.Price * foodIndex.Value;
-            //    totalPrice += price;
-
-            //    Console.WriteLine($"{foodIndex.Value}x {food.Description} - {price}");
-
-            //    cart.Items.Add(new Cart.CartItems()
-            //    {
-            //        Id = food.Id.ToString(),
-            //        Description = food.Description,
-            //        Quantity = foodIndex.Value
-            //    });
-            //}
         }
 
         private bool FinishCart()

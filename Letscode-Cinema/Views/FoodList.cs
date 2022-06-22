@@ -10,7 +10,7 @@ namespace Letscode_Cinema.Views
 {
     public class FoodList : Menu
     {
-        public Dictionary <int, int> ShowFoods()
+        public bool ShowFoods(int userId)
         {
             Dictionary<int, int> chosenFood = new Dictionary<int, int>();
             int chooseFood = 0;
@@ -28,7 +28,7 @@ namespace Letscode_Cinema.Views
 
             do
             {
-                DrawMenu("ESCOLHER COMIDA");
+                DrawMenu("Escolher Comida");
 
                 Dictionary<int, double> dictChooseFood = new Dictionary<int, double>(4);
                 dictChooseFood.Add(1, 12);
@@ -95,6 +95,26 @@ namespace Letscode_Cinema.Views
                             break;
                     }
                 }
+
+                CartList cart = new CartList(userId);
+                //Cart cart = Database.GetCart(userId);
+
+                foreach (var food in chosenFood)
+                {
+                    Food f = Database.GetFood(food.Key);
+
+                    Cart.CartItem item = new Cart.CartItem()
+                    {
+                        Id = food.Key.ToString(),
+                        Description = f.Description,
+                        Quantity = food.Value,
+                        Price = f.Price,
+                        TotalPrice = f.Price * food.Value
+                    };
+
+                    cart.AddItemToCart(item);
+                }
+
                 Console.Clear();
                 Console.WriteLine("--------------- P E D I D O -----------------");
                 Console.WriteLine("Produto -------- Quantidade -------- Valor ");
@@ -110,8 +130,10 @@ namespace Letscode_Cinema.Views
                 answer = Console.ReadLine().ToUpper();
             }
             while (answer == "S");
+            
             Console.Clear();
-            return chosenFood;
+
+            return true;
         }
     }
 }
