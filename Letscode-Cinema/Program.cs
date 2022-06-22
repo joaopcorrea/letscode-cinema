@@ -1,7 +1,6 @@
 ﻿using Letscode_Cinema.Models;
 using Letscode_Cinema.Services;
 using Letscode_Cinema.Views;
-using Letscode_Cinema.Models;
 
 namespace Letscode_Cinema
 {
@@ -33,7 +32,29 @@ namespace Letscode_Cinema
                     case "1":
                         try
                         {
-                            ChooseMovie(user);
+                            MovieList movieList = new MovieList();
+                            SessionList sessionList = new SessionList();
+                            Movie movie = null;
+                            do
+                            {
+                                movie = movieList.ChooseMovie(user);
+                                if (movie != null)
+                                {
+                                    Session session = null;
+                                    do
+                                    {
+                                        session = sessionList.ChooseSession(movie);
+                                        if (session != null)
+                                        {
+                                            CartList cart = new CartList(user.Id);
+                                            cart.ChangeCartSession(session.Id);
+
+                                            SeatList seatList = new SeatList();
+                                            seatList.ChooseSeats(user.Id, session);
+                                        }
+                                    } while (session != null);
+                                }
+                            } while (movie != null);
                         }
                         catch (Exception ex)
                         {

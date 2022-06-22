@@ -28,6 +28,7 @@ namespace Letscode_Cinema.Views
 
         public Movie ChooseMovie(User user)
         {
+            DrawMenu("Escolher filme");
             this.ShowMovies();
             Console.WriteLine();
 

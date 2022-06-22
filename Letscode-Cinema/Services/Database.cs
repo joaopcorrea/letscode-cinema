@@ -407,6 +407,10 @@ namespace Letscode_Cinema.Services
             List<Cart> carts = GetCarts();
 
             var cart = carts.FirstOrDefault(c => c.UserId == userId);
+            if (cart == null)
+            {
+                cart = AddCart(userId);
+            }
 
             cart.SessionId = sessionId;
 
