@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Letscode_Cinema.Views
 {
-    internal class SessionList
+    public class SessionList : Menu
     {
         List<Session> sessions = Database.GetSessions();
 
@@ -35,9 +35,13 @@ namespace Letscode_Cinema.Views
                 throw new Exception($"Nenhuma sessão disponível para o filme {movie.Title}");
             else
             {
+                DrawMenu("Escolher Sessão");
+
                 Console.WriteLine("Sessões disponíveis para o filme " + movie.Title);
-                this.ShowSessions(movie.Id);
+                
+                ShowSessions(movie.Id);
             }
+
             Console.WriteLine("Digite 0 para voltar.");
             Console.WriteLine();
 

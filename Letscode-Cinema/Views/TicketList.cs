@@ -12,11 +12,6 @@ namespace Letscode_Cinema.Views
     {
         Cart cart;
 
-        //parametro como carrinho, somente colocar um for de quantidade, descrição
-        //lista antes com os tickets que possuem, imprimir o ticket
-        //Chamar método da database de criação de ticket, vincular com a classe ticket
-        //Receber ojeto da classe carrinho, pegar infos, novo objeto de ticket mandar pra database
-        //Carrinho.items.Quantidade = gerar ticket que via para o database
         public TicketList(Cart cart)
         {
             this.cart = cart;
@@ -29,8 +24,6 @@ namespace Letscode_Cinema.Views
             bool exit = false;
             do
             {
-
-                Console.Clear();
                 foreach (var t in tickets)
                 {
                     Console.WriteLine($"Ticket N {t.Id}");
@@ -65,8 +58,6 @@ namespace Letscode_Cinema.Views
             {
                 Console.WriteLine($"{item.Id}\t{item.Quantity}x\t{item.Description}\t{item.TotalPrice}");
             }
-
-            Console.ReadLine();
         }
 
         public void CreateTicket()

@@ -10,7 +10,7 @@ namespace Letscode_Cinema.Views
 {
     public class SeatList : Menu
     {
-        public List<int[]> ChooseSeats(int userId, Session session)
+        public void ChooseSeats(int userId, Session session)
         {
             List<int[]> seatsChosen = new List<int[]>();            
 
@@ -24,28 +24,42 @@ namespace Letscode_Cinema.Views
 
                     if (seatsChosen.Count > 0)
                     {
-                        Console.WriteLine("\nAssentos escolhidos:");
+                        Console.Write("\nAssentos escolhidos: ");
+                        string chosenSeats = "";
+                        
                         foreach (int[] s in seatsChosen)
                         {
-                            Console.Write($"{GetSeatName(s[0], s[1])}, ");
+                            chosenSeats += $"{GetSeatName(s[0], s[1])}, ";
                         }
+                        
+                        chosenSeats = chosenSeats.Remove(chosenSeats.Length - 2);
+                        Console.WriteLine(chosenSeats);
                         Console.WriteLine();
                     }
 
-                    Console.WriteLine("\nAssentos disponíveis:");
+                    Console.WriteLine("Assentos disponíveis:");
 
                     DrawSeats(session);
 
                     Console.WriteLine();
-                    Console.WriteLine("Digite '0' para retornar ao menu anterior");
+                    Console.WriteLine("Digite '0' para retornar ao menu anterior.");
                     Console.WriteLine("Escolha um assento: ");
+
+                    if (seatsChosen.Count > 0)
+                        Console.WriteLine("Digite '1' para continuar com os assentos selecionados.");
+                    Console.WriteLine();
+                    Console.Write("Escolha um assento: ");
 
                     string seat = Console.ReadLine();
                     if (seat == "0")
+                        return;
+                    else if (seat == "1" && seatsChosen.Count > 0)
                     {
                         exit = true;
                         continue;
                     }
+                    else if (string.IsNullOrEmpty(seat))
+                        throw new FormatException();
 
                     int[] indexes = GetSeatIndexes(seat);
 
@@ -70,12 +84,12 @@ namespace Letscode_Cinema.Views
                         }
                     }
                 }
-                catch (FormatException ex)
+                catch (FormatException)
                 {
                     Console.WriteLine("Assento inválido!");
                     Console.ReadLine();
                 }
-                catch (IndexOutOfRangeException ex)
+                catch (IndexOutOfRangeException)
                 {
                     Console.WriteLine("Assento inválido!");
                     Console.ReadLine();
@@ -103,8 +117,6 @@ namespace Letscode_Cinema.Views
 
                 cart.AddItemToCart(item);
             }
-
-            return null;
         }
 
         private void DrawSeats(Session session)
