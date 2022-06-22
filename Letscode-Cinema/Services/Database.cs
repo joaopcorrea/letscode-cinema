@@ -361,11 +361,6 @@ namespace Letscode_Cinema.Services
                 cart = Database.AddCart(userId);
             }
 
-            if (cart == null)
-            {
-                cart = Database.AddCart(userId);
-            }
-
             return cart;
         }
 
@@ -397,12 +392,7 @@ namespace Letscode_Cinema.Services
                 cart = Database.AddCart(userId);
             }
 
-            if (cart == null)
-            {
-                cart = Database.AddCart(userId);
-            }
-
-            cart.Items.RemoveAt(cart.Items.IndexOf(item));
+            cart.Items = cart.Items.Where(i => i.Id != item.Id).ToList();
 
             UpdateCarts(carts);
 
@@ -419,11 +409,6 @@ namespace Letscode_Cinema.Services
                 cart = Database.AddCart(userId);
             }
 
-            if (cart == null)
-            {
-                cart = Database.AddCart(userId);
-            }
-
             cart.Items.Add(item);
 
             UpdateCarts(carts);
@@ -435,6 +420,11 @@ namespace Letscode_Cinema.Services
         {
             List<Cart> carts = GetCarts();
             var cart = carts.FirstOrDefault(c => c.UserId == userId);
+
+            if (sessionId != cart.SessionId)
+            {
+                ClearCart(userId);
+            }
 
             if (cart == null)
             {

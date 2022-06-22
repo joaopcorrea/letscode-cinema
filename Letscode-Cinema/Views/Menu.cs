@@ -27,11 +27,15 @@ namespace Letscode_Cinema.Views
         public void DrawSessionMenu(int sessionId)
         {
             Session session = Database.GetSession(sessionId);
-            Movie movie = Database.GetMovie(session.MovieId);
 
-            Console.WriteLine($"{movie.Title}");
-            Console.WriteLine($"{session.Room.Cinema.CinemaName} - {session.Room.RoomName}");
-            Console.WriteLine($"{session.Date:dddd dd/MM HH:mm}\n");
+            if (session != null)
+            {
+                Movie movie = Database.GetMovie(session.MovieId);
+
+                Console.WriteLine($"{movie.Title}");
+                Console.WriteLine($"{session.Room.Cinema.CinemaName} - {session.Room.RoomName}");
+                Console.WriteLine($"{session.Date:dddd dd/MM HH:mm}\n");
+            }
         }
 
         public void DrawMainMenu()

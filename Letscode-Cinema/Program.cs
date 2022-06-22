@@ -19,6 +19,8 @@ namespace Letscode_Cinema
                 user = login.Show();
             } while (user == null);
 
+            Database.GetCart(user.Id);
+
             Menu menu = new Menu();
             string option;
             do
@@ -103,12 +105,32 @@ namespace Letscode_Cinema
 
         private static void ChooseFood(User user)
         {
+            Cart cart = Database.GetCart(user.Id);
+
+            if (cart.SessionId == 0)
+            {
+                Console.WriteLine("Escolha um filme primeiro!");
+                Console.ReadLine();
+                return;
+            }
+
             FoodList foodList = new FoodList();
             foodList.ShowFoods(user.Id);
         }
 
         private static void ChooseMovie(User user)
         {
+            Cart c = Database.GetCart(user.Id);
+            if (c.Items.Count > 0)
+            {
+                Console.WriteLine("Você tem itens no carrinho. Ao selecionar uma sessão diferente, " +
+                    "o carrinho será esvaziado!\nDeseja continuar? (S/N)");
+                string option = Console.ReadLine();
+                if (option.ToUpper() != "S")
+                    return;
+            }
+
+
             MovieList movieList = new MovieList();
             SessionList sessionList = new SessionList();
             Movie movie;

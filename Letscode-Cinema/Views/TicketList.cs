@@ -20,17 +20,22 @@ namespace Letscode_Cinema.Views
 
         public void ListTickets()
         {
+            DrawMenu("Lista de Tickets");
+
             var tickets = Database.GetTickets(cart.UserId);
 
             bool exit = false;
             do
             {
+                Console.Clear();
+                Console.WriteLine("0. Voltar");
+
                 foreach (var t in tickets)
                 {
-                    Console.WriteLine($"Ticket N {t.Id}");
+                    Console.WriteLine($"\n{t.Id}. {t.Date:d} - R${t.Price:N2}");
                 }
 
-                Console.WriteLine("Digite o número do ticket ou o número zero para sair: ");
+                Console.Write("\nDigite o número do ticket: ");
 
                 string num = Console.ReadLine();
 
@@ -38,6 +43,7 @@ namespace Letscode_Cinema.Views
                 if (num == "0")
                 {
                     exit = true;
+                    continue;
                 }
                 else if (ticket == null)
                 {
@@ -56,19 +62,19 @@ namespace Letscode_Cinema.Views
             Session session = Database.GetSession(ticket.SessionId);
 
             DrawMenu($"TICKET Nº {ticket.Id}");
-            Console.WriteLine($"{session.Room.Cinema.CinemaName}, {session.Room.Cinema.City}\n{session.Room.RoomName}");
-            Console.WriteLine($"Data: {session.Date.ToString("d")}");
-            Console.WriteLine($"Horário: +{session.Date.ToString("t")}");
-            //DrawSessionMenu(cart.SessionId);
-            Console.WriteLine($"Preço: {ticket.Price}");
+            DrawSessionMenu(session.Id);
+            //Console.WriteLine($"{session.Room.Cinema.CinemaName}, {session.Room.Cinema.City}\n{session.Room.RoomName}");
+            //Console.WriteLine($"Data: {session.Date.ToString("d")}");
+            //Console.WriteLine($"Horário: +{session.Date.ToString("t")}");
+            Console.WriteLine($"Preço: {ticket.Price:C}");
             Console.WriteLine($"Usuário: {user.Name}");
-            Console.WriteLine("Id\tQtd\tDescrição\tTotal");
+            Console.WriteLine("\nId\tQtd\tDescrição\tTotal");
             foreach (var item in ticket.Items.OrderBy(t => t.Description))
             {
-                Console.WriteLine($"{item.Id}\t{item.Quantity}x\t{item.Description}\t"
-                    + $"        {item.TotalPrice.ToString("C")}");
+                Console.WriteLine($"{item.Id}\t{item.Quantity}x\t{item.Description.PadRight(15, ' ')}\t"
+                    + $"{item.TotalPrice:C}");
             }
-            Console.WriteLine();
+            Console.ReadLine();
         }
 
         public void CreateTicket()

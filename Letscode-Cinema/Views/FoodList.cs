@@ -52,67 +52,45 @@ namespace Letscode_Cinema.Views
                 if (!dictChooseFood.TryGetValue(chooseFood, out price))
                 {
                     Console.WriteLine("Opção inválida! Tente novamente...");
+                    continue;
                 }
                 else
                 {
                     switch (chooseFood)
                     {
                         case 1:
-                            quantitySaltyPopCorn = quantitySaltyPopCorn + quantity;
+                            quantitySaltyPopCorn += quantity;
                             priceSaltyPopCorn = quantitySaltyPopCorn * price;
                             validateFood[0] = "Pipoca ------------- " + quantitySaltyPopCorn + " ------------- " + priceSaltyPopCorn.ToString("C");
-                            if (chosenFood.ContainsKey(chooseFood))
-                                chosenFood[chooseFood] += quantity; 
-                            else
-                                chosenFood.Add(chooseFood, quantity);
                             break;
+
                         case 2:
-                            quantitySweetPopCorn = quantitySweetPopCorn + quantity;
+                            quantitySweetPopCorn += + quantity;
                             priceSweetPopCorn = quantitySweetPopCorn * price;
                             validateFood[1] = "Pipoca Doce -------- " + quantitySweetPopCorn + " ------------- " + priceSweetPopCorn.ToString("C");
-                            if (chosenFood.ContainsKey(chooseFood))
-                                chosenFood[chooseFood] += quantity;
-                            else
-                                chosenFood.Add(chooseFood, quantity);
                             break;
+
                         case 3:
-                            quantityCoke = quantityCoke + quantity;
+                            quantityCoke += quantity;
                             priceCoke = quantityCoke * price;
                             validateFood[2] = "Coca-Cola ---------- " + quantityCoke + " ------------- " + priceCoke.ToString("C");
-                            if (chosenFood.ContainsKey(chooseFood))
-                                chosenFood[chooseFood] += quantity;
-                            else
-                                chosenFood.Add(chooseFood, quantity);
                             break;
-                        default:
-                            quantityDietCoke = quantityDietCoke + quantity;
+
+                        case 4:
+                            quantityDietCoke += quantity;
                             priceDietCoke = quantityDietCoke * price;
                             validateFood[3] = "Coca-Cola Diet ----- " + quantityDietCoke + " ------------- " + priceDietCoke.ToString("C");
-                            if (chosenFood.ContainsKey(chooseFood))
-                                chosenFood[chooseFood] += quantity;
-                            else
-                                chosenFood.Add(chooseFood, quantity);
                             break;
+
+                        default:
+                            Console.WriteLine("Opção inválida! Tente novamente...");
+                            continue;
                     }
-                }
 
-                CartList cart = new CartList(userId);
-                //Cart cart = Database.GetCart(userId);
-
-                foreach (var food in chosenFood)
-                {
-                    Food f = Database.GetFood(food.Key);
-
-                    Cart.CartItem item = new Cart.CartItem()
-                    {
-                        Id = food.Key.ToString(),
-                        Description = f.Description,
-                        Quantity = food.Value,
-                        Price = f.Price,
-                        TotalPrice = f.Price * food.Value
-                    };
-
-                    cart.AddItemToCart(item);
+                    if (chosenFood.ContainsKey(chooseFood))
+                        chosenFood[chooseFood] += quantity;
+                    else
+                        chosenFood.Add(chooseFood, quantity);
                 }
 
                 Console.Clear();
@@ -130,7 +108,25 @@ namespace Letscode_Cinema.Views
                 answer = Console.ReadLine().ToUpper();
             }
             while (answer == "S");
-            
+
+            CartList cart = new CartList(userId);
+
+            foreach (var food in chosenFood)
+            {
+                Food f = Database.GetFood(food.Key);
+
+                Cart.CartItem item = new Cart.CartItem()
+                {
+                    Id = food.Key.ToString(),
+                    Description = f.Description,
+                    Quantity = food.Value,
+                    Price = f.Price,
+                    TotalPrice = f.Price * food.Value
+                };
+
+                cart.AddItemToCart(item);
+            }
+
             Console.Clear();
 
             return true;

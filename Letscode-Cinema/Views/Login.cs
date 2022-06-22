@@ -140,8 +140,8 @@ namespace Letscode_Cinema.Views
             {
                 Console.WriteLine("Erro: " + ex.ToString());
                 Console.ReadLine();
+                return null;
             }
-            return user;
         }
     }
 }
