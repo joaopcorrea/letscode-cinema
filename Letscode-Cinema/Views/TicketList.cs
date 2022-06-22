@@ -25,8 +25,6 @@ namespace Letscode_Cinema.Views
             bool exit = false;
             do
             {
-
-                Console.Clear();
                 foreach (var t in tickets)
                 {
                     Console.WriteLine($"Ticket N {t.Id}");
@@ -65,7 +63,6 @@ namespace Letscode_Cinema.Views
                 Console.WriteLine($"{item.Id}\t{item.Quantity}x\t{item.Description}\t"
                     + $"        {item.TotalPrice.ToString("C")}");
             }
-            Console.ReadLine();
         }
 
         public void CreateTicket()

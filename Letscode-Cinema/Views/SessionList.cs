@@ -36,10 +36,13 @@ namespace Letscode_Cinema.Views
                 throw new Exception($"Nenhuma sessão disponível para o filme {movie.Title}");
             else
             {
-                DrawMenu("ESCOLHER SESSÃO");
+                DrawMenu("Escolher Sessão");
+
                 Console.WriteLine("Sessões disponíveis para o filme " + movie.Title);
-                this.ShowSessions(movie.Id);
+                
+                ShowSessions(movie.Id);
             }
+
             Console.WriteLine("Digite 0 para voltar.");
             Console.WriteLine();
 

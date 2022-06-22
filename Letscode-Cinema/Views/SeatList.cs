@@ -24,25 +24,34 @@ namespace Letscode_Cinema.Views
 
                     if (seatsChosen.Count > 0)
                     {
-                        Console.Write("Assentos escolhidos: ");
+                        Console.Write("\nAssentos escolhidos: ");
                         string chosenSeats = "";
+                        
                         foreach (int[] s in seatsChosen)
                         {
                             chosenSeats += $"{GetSeatName(s[0], s[1])}, ";
                         }
+                        
                         chosenSeats = chosenSeats.Remove(chosenSeats.Length - 2);
                         Console.WriteLine(chosenSeats);
                         Console.WriteLine();
                     }
 
                     Console.WriteLine("Assentos disponíveis:");
+
                     DrawSeats(session);
                     Console.WriteLine();
                     Console.WriteLine("Digite '0' para retornar ao menu anterior.");
                     if (seatsChosen.Count > 0)
                         Console.WriteLine("Digite '1' para continuar com os assentos selecionados.");
                     Console.WriteLine();
-                    Console.Write("Escolha um assento: "); 
+                    Console.WriteLine("Digite '0' para retornar ao menu anterior.");
+                    Console.WriteLine("Escolha um assento: ");
+
+                    if (seatsChosen.Count > 0)
+                        Console.WriteLine("Digite '1' para continuar com os assentos selecionados.");
+                    Console.WriteLine();
+                    Console.Write("Escolha um assento: ");
 
                     string seat = Console.ReadLine();
                     if (seat == "0")
@@ -78,12 +87,12 @@ namespace Letscode_Cinema.Views
                         }
                     }
                 }
-                catch (FormatException ex)
+                catch (FormatException)
                 {
                     Console.WriteLine("Assento inválido!");
                     Console.ReadLine();
                 }
-                catch (IndexOutOfRangeException ex)
+                catch (IndexOutOfRangeException)
                 {
                     Console.WriteLine("Assento inválido!");
                     Console.ReadLine();

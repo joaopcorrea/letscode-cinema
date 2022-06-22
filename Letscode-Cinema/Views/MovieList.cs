@@ -23,13 +23,13 @@ namespace Letscode_Cinema.Views
                 Console.WriteLine($"    Classificação indicativa: +{movie.MinimumAge}");
                 Console.WriteLine($"    Avaliação: {movie.Review}");
             }
-            Console.WriteLine("Digite 0 para voltar.");
+            Console.WriteLine("Digite '0' para voltar.");
         }
 
         public Movie ChooseMovie(User user)
         {
-            DrawMenu("ESCOLHER FILME");
-            this.ShowMovies();
+            DrawMenu("Escolher filme");
+            ShowMovies();
             Console.WriteLine();
 
             bool choiseIsInt = false;
