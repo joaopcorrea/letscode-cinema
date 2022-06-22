@@ -40,7 +40,10 @@ namespace Letscode_Cinema.Views
                     Console.WriteLine("Assentos disponíveis:");
 
                     DrawSeats(session);
-
+                    Console.WriteLine();
+                    Console.WriteLine("Digite '0' para retornar ao menu anterior.");
+                    if (seatsChosen.Count > 0)
+                        Console.WriteLine("Digite '1' para continuar com os assentos selecionados.");
                     Console.WriteLine();
                     Console.WriteLine("Digite '0' para retornar ao menu anterior.");
                     Console.WriteLine("Escolha um assento: ");
