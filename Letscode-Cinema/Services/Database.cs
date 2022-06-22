@@ -356,6 +356,11 @@ namespace Letscode_Cinema.Services
         {
             Cart cart = GetCarts().FirstOrDefault(c => c.UserId == userId);
 
+            if (cart == null)
+            {
+                cart = Database.AddCart(userId);
+            }
+
             return cart;
         }
 
@@ -382,6 +387,11 @@ namespace Letscode_Cinema.Services
             List<Cart> carts = GetCarts();
             Cart cart = carts.FirstOrDefault(c => c.UserId == userId);
 
+            if (cart == null)
+            {
+                cart = Database.AddCart(userId);
+            }
+
             cart.Items.RemoveAt(cart.Items.IndexOf(item));
 
             UpdateCarts(carts);
@@ -392,8 +402,12 @@ namespace Letscode_Cinema.Services
         public static bool AddCartItem(int userId, Cart.CartItem item)
         {
             List<Cart> carts = GetCarts();
-
             var cart = carts.FirstOrDefault(c => c.UserId == userId);
+
+            if (cart == null)
+            {
+                cart = Database.AddCart(userId);
+            }
 
             cart.Items.Add(item);
 
@@ -405,8 +419,8 @@ namespace Letscode_Cinema.Services
         public static bool ChangeCartSession(int userId, int sessionId)
         {
             List<Cart> carts = GetCarts();
-
             var cart = carts.FirstOrDefault(c => c.UserId == userId);
+
             if (cart == null)
             {
                 cart = AddCart(userId);
