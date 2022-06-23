@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Letscode_Cinema.Models
 {
-    internal class Login
+    public class Cinema
     {
+        public string CinemaName { get; set; }
+        public string City { get; set; }
     }
 }
